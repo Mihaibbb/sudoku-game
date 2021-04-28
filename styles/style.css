@@ -1,0 +1,827 @@
+*,
+*::before,
+*::after
+{
+    box-sizing: border-box;
+}
+
+body
+{
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Source Sans Pro', sans-serif;
+    max-width: 100%;
+    max-height: 100%;  
+}
+
+a 
+{
+    text-decoration: none;
+    color: initial;
+}
+
+/* Header */
+
+header
+{
+    width: 100%;
+    height: 70px;
+    background:rgb(52, 72, 97);
+    box-shadow: 15px 10px 30px rgb(1, 87, 155);
+    position: relative;
+    z-index: 3;
+   
+}
+
+header nav 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    transform: translateX(-3rem) translateY(-3px);
+    float: right;
+    
+}
+
+header nav p
+{
+    margin: 0 1.5rem;
+    color: rgb(173, 217, 235);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.game-mode 
+{
+    display: none;
+}
+
+.end-game 
+{
+    position: absolute;
+    background: rgba(0, 0, 0, .85);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    
+    justify-content: center;
+    align-items: center;
+
+    display: none;
+    opacity: 0;
+    transition: all 350ms ease-in-out;
+    
+}
+
+.end-game.active 
+{
+    z-index: 100;
+    display: flex;
+    opacity: 1;
+}
+
+.end-game .game-result-card
+{
+    width: 350px;
+    min-height: 200px;
+    background: white;
+    border-radius: 1rem;
+    
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+}
+
+.end-game.win .game-result-card
+{
+    box-shadow: 0px 0px 75px rgb(77, 144, 226);
+}
+
+.end-game.lose .game-result-card
+{
+    box-shadow: 0px 0px 75px coral;
+}
+
+.game-result-card > * 
+{
+    max-height: 25px;
+}
+
+.game-result-card .result 
+{
+    
+    font-size: 30px;
+}
+
+.end-game.win .game-result-card .result
+{
+    color: rgb(48, 173, 35);
+}
+
+.end-game.lose .game-result-card .result
+{
+    color: coral;
+}
+
+
+.game
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: calc(100vh - 70px);
+    position: relative;
+    z-index: 1;
+    -webkit-user-drag: none;
+}
+
+.success
+{
+    font-size: 26px;
+    text-align: center;
+    color: green;
+    font-family: 'Lato', sans-serif;
+    transition: all 500ms ease-in-out;
+}
+
+.success.hide 
+{
+    opacity: 0;
+    display: none;
+    
+}
+
+.fail 
+{
+    font-size: 26px;
+    text-align: center;
+    color: red;
+    font-family: 'Lato';
+    transition: all 500ms ease-in-out;
+}
+
+.game.inactive 
+{
+    z-index: -1;
+}
+
+
+.login_system 
+{
+    position: absolute;
+    background: rgba(0, 0, 0, .85);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    display: none;
+    
+    transition: all 350ms ease-in-out;
+}
+
+.login_system.active 
+{
+    z-index: 100;
+    display: block;
+    opacity: 1;
+}
+
+
+
+.game-grid
+{
+    display: flex; 
+    width: 100%;
+    
+    height: 100%;
+    
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    
+}
+
+.game-overlay
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(-1.3rem);
+    position: relative;
+}
+
+
+/* Game modes */
+
+.game_modes
+{  
+   align-self: flex-start;
+   width: 250px;
+   height: 550px;
+   margin: 0 3rem;
+
+}
+
+.mode_title 
+{
+    text-align: center;
+    color:rgb(77, 144, 226);
+    
+}
+
+.mode  
+{
+   
+    margin: 1.5rem 0 3rem;
+    width: 100%;
+    height: 65px;
+    border: 3px solid rgb(52, 72, 97);
+    box-shadow: 0 4px 0 rgb(46, 58, 73);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+
+    font-size: 24px;
+    
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 350ms ease-in-out;
+}
+
+.mode.active 
+{
+    background: rgb(52, 72, 97);
+    border: 3px solid rgb(52, 72, 97);
+    box-shadow: 0 4px 0 rgb(52, 72, 97);
+    color: #fff;
+}
+
+.mode.active a 
+{
+    color: #fff;
+}
+
+.mode:not(.active):hover
+{
+    background: rgb(77, 144, 226);
+    border: 3px solid rgb(77, 144, 226);
+    box-shadow: 0 4px 0 rgb(77, 144, 226);
+    color: #fff;
+} 
+
+.mode:not(.active):hover a 
+{
+    color: #fff;
+}
+
+
+
+/* New game */
+
+.new-game
+{
+    transform: translateY(-1rem);
+    width: 300px;
+    height: 75px;
+    border-radius: 8px;
+    border: 2px solid rgb(52, 72, 97);
+    box-shadow: 0 6px 0 rgb(52, 72, 97);
+    border-width: 2.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+}
+
+.new-game h1
+{
+    color: rgb(77, 144, 226);
+}
+
+.new-game:hover {
+    background: rgb(77, 144, 226);
+    border: rgb(77, 144, 226);
+    box-shadow: 0 6px 0 rgb(77, 144, 226);
+}
+
+.new-game:hover h1
+{
+    color: #fff;
+}
+
+/* Numbers grid */
+
+.numbers-grid
+{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    align-items: center;
+    margin: 0 1.5rem;
+}
+
+
+
+.numbers-grid .number
+{
+    width: 100px;
+    height: 100px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #42648f; 
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: all 250ms ease-out;
+}
+
+
+
+.numbers-grid .number span
+{
+    font-size: 50px;
+    color:rgb(52, 72, 97);
+}
+
+.numbers-grid .number:hover
+{
+    background: rgb(77, 144, 226);
+    
+}
+.numbers-grid .number:hover > span
+{
+    color: #fff;
+}
+
+/* Game commands */
+
+.game-control
+{
+    max-width: 300px;
+    min-width: 300px;
+    display: grid;
+    grid-template-columns: auto auto;
+    
+    margin-top: 15px;
+}
+
+.command
+{
+    border: 1px solid #42648f; 
+    outline: 1px solid #42648f;
+    width: 150px;
+    height: 75px;
+
+    cursor: pointer;
+   
+    -webkit-user-select: none;
+    user-select: none;
+    transition: all 350ms ease;
+}
+
+.command.solveContainer
+{
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    width: 100%;
+}
+
+
+.command .command-title
+{
+    text-align: center;
+
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: rgb(45, 62, 83);
+    
+    margin-top: 1.5px;
+}
+
+
+.command .solver,
+.command .player_score,
+.command .hint,
+.command .undo,
+.command .erase
+{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    color: rgb(77, 144, 226);
+}
+
+.command .player_score .score
+{
+    margin-left: 2.5px;
+}
+
+/* Letting space for the counter of hints */
+.command .hint
+{
+    position: relative;
+    margin-top: 0px;
+}
+
+.command i:not(.fa-bolt)
+{
+    transform: translateY(7.5px);
+}
+
+.command .player_score
+{
+    transform: translateY(5px);
+}
+
+.hint-counter
+{
+    font-size: 15px;
+    color: #fff;
+    width: 30px;
+    background: rgb(52, 72, 97);
+    position: absolute;
+    top: -5px;
+    right: 45px;
+    padding: 5px 10px;
+    border-radius: 100%;
+    transition: all 350ms ease-in-out;
+}
+
+.command .player_score i 
+{
+    font-size: 20px;
+    margin-top: 10px;
+    transition: all 250ms ease-in-out;
+    
+}
+
+.command:hover .player_score,
+.command:hover .hint,
+.command:hover .undo,
+.command:hover .erase,
+.command:hover .command-title
+{
+    color: white;
+}
+
+.command:hover .hint-counter
+{
+    color: rgb(52, 72, 97);
+    background: #fff;
+}
+
+.command:hover
+{
+    background:rgb(77, 144, 226);
+}
+
+.command:hover .player_score i 
+{
+    transform: rotateZ(5deg);
+}
+
+.board
+{
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    height: 100%;
+    min-height: 600px;
+}
+
+.board, .game-row, .game-cell
+{
+    border: 1px solid #736b5e;
+    border-collapse: collapse;
+}
+
+.animation 
+{
+    animation: cellAnimation 3s linear;
+    animation-fill-mode: forwards;
+}
+
+.play-button
+{
+    cursor: pointer;
+    pointer-events: all;
+    color: rgb(77, 144, 226);
+    font-size: 45px;
+    opacity: 0;
+    display: none;
+    transition: all 350ms ease-in-out;
+}
+
+.board.paused .game-cell
+{
+    pointer-events: none;
+}
+
+/* Timer */
+
+.timer
+{
+    margin: 0 auto;
+    
+    -webkit-user-select: none;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.timer h2 
+{
+    font-size: 35px;
+    color: rgb(52, 72, 97);
+}
+
+.timer h2 span.time
+{
+    color: green;
+    margin-left: .5rem;
+    transition: all 350ms ease-in-out;
+}
+
+
+.timer .pause-time
+{
+
+    font-size: 40px;
+    margin: .3rem .7rem 0;
+    color: green;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+}
+
+.timer.secondWave h2 span.time,
+.pause-time.secondWave
+{
+    /* color: rgb(255, 189, 46); */
+    color: #ed790c;
+}
+
+.timer.finalWave h2 span.time,
+.pause-time.finalWave
+{
+    color: rgb(219, 39, 15);
+}   
+
+
+
+.game-cell
+{
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: rgb(52, 72, 97);
+    
+    -webkit-user-select: none;
+    user-select: none;
+    transition: all 350ms ease-in-out;
+}
+
+.game-row:first-child .game-cell
+{
+    border-top: 2px solid #344861;
+
+}
+
+.game-row:first-child .game-cell:first-child
+{
+    border-left: 2px solid #344861;
+}
+
+.game-row:first-child .game-cell:last-child
+{
+    border-right: 2px solid #344861;
+}
+
+.game-row:nth-child(n) .game-cell:first-child
+{
+    border-left: 2px solid #344861;
+}
+
+.game-row:nth-child(n) .game-cell:last-child
+{
+    border-right: 2px solid #344861;
+}
+
+.game-row:last-child .game-cell
+{
+    border-bottom: 2px solid #344861;
+}
+
+.game-row:nth-child(n) .game-cell:nth-child(3n)
+{
+    border-right: 2px solid #344861;
+}
+
+.game-row:nth-child(3n) .game-cell:nth-child(n)
+{
+    border-bottom: 2px solid #344861;
+}
+
+.chosen_cell
+{
+    background-color: rgb(187, 222, 251);
+}
+
+.chosen_row_column_square:not(.chosen_cell)
+{
+    background-color: rgb(183, 202, 224);
+}
+
+/* Classes for checking if the number from the cell is ok */
+
+.passedCell 
+{
+    color: rgb(77, 144, 226);
+}
+
+.correctCell {
+    color: rgb(60, 194, 60);
+}
+
+.failedCell
+{
+    color: rgb(250, 79, 81);
+}
+
+.failedCellBg:not(.chosen_cell):not(.passedCell)
+{
+    background-color: rgb(247, 207, 214);
+}
+
+/* js classes */
+
+
+
+.show
+{
+    opacity: 1;
+    display: block;
+}
+
+.hide 
+{
+    opacity: 0;
+    display: none;
+}
+
+.not-clickable
+{
+    cursor: no-drop;
+}
+
+/* PHP classes */
+
+
+/* overlay on smaller screens */
+
+@media only screen and (max-width: 1175px) 
+{
+    .game-grid
+    {
+        flex-direction: column;
+    }
+
+    .game-overlay 
+    {
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .numbers-grid 
+    {
+        grid-template-columns: repeat(9, auto);
+    }
+
+    .numbers-grid .number {
+        max-width: 60px;
+        height: 60px;
+        margin-top: 50px;
+    }
+
+
+    .numbers-grid .number span {
+       font-size: 30px;
+       font-weight: 700;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
+
+    .game-control 
+    {
+        grid-template-columns: repeat(4, auto);
+        grid-column-gap: 2rem;
+        
+        
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .command 
+    {
+        border: none;
+        outline: none;
+    }
+
+    .desktop 
+    {
+        display: none;
+    }
+
+    .game_modes
+    {
+        width: 100%;
+        height: 100%;
+
+    }
+
+    .modes
+    {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+       
+        grid-template-columns: repeat(3, minmax(150px, 1fr));
+        grid-column-gap: 10px;
+    }
+
+    .mode 
+    {
+        width: 1fr; 
+        max-width: 300px;
+    }
+    
+}
+
+/* Login request */
+
+.login_request 
+{
+    font-family: 'Poppins', sans-serif;
+    color: grey;
+}
+
+.login_request span
+{
+    color:rgb(1, 87, 155);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) 
+{
+    
+}
+
+@media only screen and (max-width: 500px)
+{
+    
+}
+
+@keyframes cellAnimation {
+    25% {
+        color: rgb(52, 72, 97);
+    }  
+    100% {
+        color:rgb(60, 194, 60);
+    }
+}   
+
+@media only screen and (min-width: 1921px)
+{
+    .game {
+        
+    }
+}
