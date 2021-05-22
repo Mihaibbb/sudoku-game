@@ -3,10 +3,57 @@ import ReverseSudoku from './reverseModeInterface.js';
 const gameElement = document.querySelector('.game');
 const board = document.querySelector('table.board');
 const timer = document.querySelector('.timer');
+const timerText = timer.querySelector('.timer_text');
 
+if (screen.width > 1920) {
+    const scaleX = screen.width / 1920;
+    gameElement.style.transform = 'scale(' + scaleX + ')';
+}
 
 const game = new ReverseSudoku(gameElement, board, timer);
 game.createBoard();
+
+
+const gameModeTitle = document.querySelector('.mode_title h1');
+const classicMode = document.querySelector('.modes .mode.classic');
+const competitiveMode = document.querySelector('.modes .mode.competitive');
+const reverseMode = document.querySelector('.modes .mode.reverse');
+const newGame = document.querySelector('.new-game h1');
+
+// Compute titles
+const undoButton = document.querySelector('.undoContainer');
+const eraseButton = document.querySelector('.eraseContainer');
+const solveButton = document.querySelector('.solveContainer');
+
+const solveTitle = solveButton.querySelector('.command-title');
+const undoTitle = undoButton.querySelector('.command-title');
+const eraseTitle = eraseButton.querySelector('.command-title');
+
+// Header items
+
+const sudokuGameItem = document.querySelector('.sudoku_game_item');
+const tipsAndTricksItem = document.querySelector('.tips_and_tricks_item');
+const loginItem = document.querySelector('.log_in_item');
+const signupItem = document.querySelector('.sign_up_item');
+const logoutItem = document.querySelector('.log_out_item');
+const accountItem = document.querySelector('.account_item');
+
+// Header 
+
+const language = document.querySelector('img.language');
+
+language.addEventListener('click', () => {
+    
+    if (language.src.toString().includes('ro')) {
+        language.src = language.src.toString().replace("ro", "en");
+        changeLangToRo();
+    } else {
+        language.src = language.src.toString().replace("en", "ro");
+       
+        changeLangToEn();
+    }
+    
+});
 
 // Click event on cell
 const cells = document.querySelectorAll('.game-cell');
@@ -16,6 +63,11 @@ cells.forEach((cell, index) => {
 
     cell.addEventListener('click', () => {
         game.cellHighlight(cell, cellIndex);
+
+         // Erase event
+        eraseButton.addEventListener('click', () => {
+            game.erase();
+        });
     });
 
     document.addEventListener('keydown', e => {
@@ -33,6 +85,8 @@ cells.forEach((cell, index) => {
             game.printValue(parseInt(dataNumber.innerText));
         });
     });
+
+   
 
 });
 
@@ -63,8 +117,6 @@ document.addEventListener('click', e => {
         });
     }
 });
-
-
 
 // Click event for pause/play button
 const boardPlayButton = document.querySelector('.play-button');
@@ -100,7 +152,6 @@ timerPauseButton.addEventListener('click', () => {
     }
 
 });
-
 
 
 const timeSeconds = timer.querySelector('.seconds');
@@ -164,12 +215,10 @@ const counter = () => {
 // Interval for timer going
 let timerInterval = setInterval(counter, 1000);
 
-// Solve Board
-
-const solveButton = document.querySelector('.solveContainer');
 
 solveButton.addEventListener('click', () => {
     game.solveCurrentBoard();
+    
 })
 
 // New Game
@@ -180,3 +229,66 @@ newGameButton.addEventListener('click', () => {
     game.newGame();
     console.log(newGameButton);
 });
+
+
+const changeLangToEn = () => {
+
+    sudokuGameItem.innerText = 'Sudoku Game';
+    tipsAndTricksItem.innerText = 'Sudoku Tips & Tricks';
+    if (loginItem !== null) {
+        loginItem.innerText = 'Log In';
+    }
+
+    if (signupItem !== null) {
+        signupItem.innerText = 'Sign Up';
+    }
+
+    if (logoutItem !== null) {
+        logoutItem.innerText = 'Log out';
+    }
+
+    if (accountItem !== null) {
+        accountItem.innerText = 'Account';
+    }
+    
+    gameModeTitle.innerText = 'Game Modes';
+    classicMode.innerText = 'Classic Mode';
+    competitiveMode.innerText = 'Competitive Mode';
+    reverseMode.innerText = 'Reverse Mode';
+    timerText.innerText = 'Timer:';
+    newGame.innerText = 'New Game';
+    solveTitle.innerText = 'Solve!';
+    undoTitle.innerText = 'Undo';
+    eraseTitle.innerText = 'Erase';  
+}
+
+const changeLangToRo = () => {
+
+    sudokuGameItem.innerText = 'Jocul Sudoku';
+    tipsAndTricksItem.innerText = 'Sfaturi și trucuri Sudoku';
+    if (loginItem !== null) {
+        loginItem.innerText = 'Logheaza-te';
+    }
+
+    if (signupItem !== null) {
+        signupItem.innerText = 'Inscrie-te';
+    }
+
+    if (logoutItem !== null) {
+        logoutItem.innerText = 'Delogheaza-te';
+    }
+
+    if (accountItem !== null) {
+        accountItem.innerText = 'Contul Meu';
+    }
+    
+    gameModeTitle.innerText = 'Moduri de joc';
+    classicMode.innerText = 'Modul Clasic';
+    competitiveMode.innerText = 'Modul Competitiv';
+    reverseMode.innerText = 'Modul Invers';
+    timerText.innerText = 'Timp:';
+    newGame.innerText = 'Joc Nou';
+    solveTitle.innerText = 'Rezolvă!'
+    undoTitle.innerText = 'Înapoi';
+    eraseTitle.innerText = 'Ștergere';
+}

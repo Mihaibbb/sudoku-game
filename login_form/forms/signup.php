@@ -16,9 +16,19 @@
     <script src="../scripts/form-validation.js" defer></script>
 </head>
 <body>
+
+    <?php   
+        if (isset($_SESSION['signup_success']) && $_SESSION['signup_success']) {
+            header("Location: ../../");
+            die();
+        }
+    ?>
+
     <?php 
         require_once '../../sections/login_header.php';
     ?>
+
+    
 
     <div class="content">
         <div class="card">

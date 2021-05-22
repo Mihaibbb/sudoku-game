@@ -14,6 +14,7 @@ body
     font-family: 'Source Sans Pro', sans-serif;
     max-width: 100%;
     max-height: 100%;  
+    overflow-x: hidden;
 }
 
 a 
@@ -32,7 +33,6 @@ header
     box-shadow: 15px 10px 30px rgb(1, 87, 155);
     position: relative;
     z-index: 3;
-   
 }
 
 header nav 
@@ -49,7 +49,7 @@ header nav
 header nav p
 {
     margin: 0 1.5rem;
-    color: rgb(173, 217, 235);
+    color: rgb(191, 225, 238);
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
@@ -57,6 +57,24 @@ header nav p
     -webkit-user-select: none;
     user-select: none;
 }
+
+.difficulties {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+    
+}
+
+.difficulties h1 {
+    
+    font-size: 2rem;
+    letter-spacing: 2px;
+    user-select: none;
+}
+
+
 
 .game-mode 
 {
@@ -73,12 +91,14 @@ header nav p
     right: 0;
     width: 100%;
     height: 100vh;
-    
+
     justify-content: center;
     align-items: center;
 
     display: none;
     opacity: 0;
+    font-size: 20px;
+    font-family: 'Open Sans';
     transition: all 350ms ease-in-out;
     
 }
@@ -92,14 +112,13 @@ header nav p
 
 .end-game .game-result-card
 {
-    width: 350px;
-    min-height: 200px;
+    width: 400px;
+    min-height: 400px;
     background: white;
     border-radius: 1rem;
     
     display: flex;
     flex-direction: column;
-    
     align-items: center;
 }
 
@@ -113,15 +132,22 @@ header nav p
     box-shadow: 0px 0px 75px coral;
 }
 
-.game-result-card > * 
+.game-result-card:not(.competitive) > * 
 {
     max-height: 25px;
+    
 }
 
 .game-result-card .result 
 {
-    
+    margin-top: 3rem;
     font-size: 30px;
+}
+
+.game-result-card.competitive 
+{
+    width: 400px;
+    min-height: 250px;
 }
 
 .end-game.win .game-result-card .result
@@ -134,6 +160,70 @@ header nav p
     color: coral;
 }
 
+.end-game.competitive .game-result-card
+{
+    justify-content: center;
+    text-align: center;
+}
+
+.end-game:not(.competitive) .game-result-card p
+{
+    font-weight: 700;
+
+}
+
+.end-game:not(.competitive) .game-result-card p span.game-result
+{
+    color:rgb(0, 114, 227);
+}
+
+.end-game:not(.competitive) .game-result-card p i 
+{
+    font-size: 24px;
+    margin-right: 3px;
+}
+ 
+
+.end-game:not(.competitive) .game-result-card button 
+{
+    outline: none;
+    border: 2px solid rgb(0, 114, 227);
+    color: rgb(0, 114, 227);
+    border-radius: 8px;
+    width: 300px;
+    height: 125px;
+    padding: 35px;
+    margin: 10px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+}
+
+.end-game:not(.competitive) .game-result-card button:hover {
+    background: rgb(0, 114, 227);
+    color: rgba(255, 255, 255, .9);
+}
+
+.end-game:not(.competitive) .game-result-card button i {
+    transform: rotateY(180deg);
+    margin: 8px 0 0 10px;
+    
+}
+
+.login_required_message
+{
+   font-size: 18px;
+   font-weight: 600;
+   color: crimson;
+   font-family: 'Open Sans', sans-serif;
+   margin: 0 5px 15px;
+}
 
 .game
 {
@@ -144,8 +234,9 @@ header nav p
     min-width: 100%;
     min-height: calc(100vh - 70px);
     position: relative;
-    z-index: 1;
+    
     -webkit-user-drag: none;
+    
 }
 
 .success
@@ -212,6 +303,8 @@ header nav p
     justify-content: center;
     align-content: center;
     align-items: center;
+    position: relative;
+    z-index: 0;
     
 }
 
@@ -222,6 +315,7 @@ header nav p
     align-items: center;
     transform: translateY(-1.3rem);
     position: relative;
+    
 }
 
 
@@ -236,14 +330,16 @@ header nav p
 
 }
 
+
 .mode_title 
 {
     text-align: center;
-    color:rgb(77, 144, 226);
-    
+    color:rgb(77, 144, 226); 
 }
 
-.mode  
+
+.mode,
+.difficulty
 {
    
     margin: 1.5rem 0 3rem;
@@ -266,7 +362,13 @@ header nav p
     transition: all 350ms ease-in-out;
 }
 
-.mode.active 
+.difficulty 
+{
+    display: none;
+}
+
+.mode.active,
+.difficulty.active
 {
     background: rgb(52, 72, 97);
     border: 3px solid rgb(52, 72, 97);
@@ -279,7 +381,8 @@ header nav p
     color: #fff;
 }
 
-.mode:not(.active):hover
+.mode:not(.active):hover,
+.difficulty:not(.active):hover
 {
     background: rgb(77, 144, 226);
     border: 3px solid rgb(77, 144, 226);
@@ -330,6 +433,97 @@ header nav p
     color: #fff;
 }
 
+.new-game-selector 
+{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 1.5rem;
+    width: 100%;
+    max-width: 310px;
+    height: auto;
+    min-height: 100px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 18px rgb(26, 95, 163);
+    margin-top: 50%;
+    z-index: 300;
+    background: white;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all 350ms ease-in-out;
+
+}
+
+.new-game-selector h1
+{
+    font-size: 24px;
+    text-align: center;
+    color:rgb(10, 86, 161);
+    font-family: 'Lato';
+}
+
+.new-game-selector .mode_selector > div 
+{
+    
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    cursor: pointer;
+}
+
+.show_selector 
+{
+    transform: scaleY(1);
+}
+
+
+.new-game-selector .restart 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 225px;
+    margin: 2rem auto 0;
+}
+
+.new-game-selector .restart button 
+{
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0px 0px 20px rgb(0, 114, 227);
+    color:rgb(0, 114, 227);
+    font-size: 21px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    cursor: pointer;
+    
+    transition: all 350ms ease-in-out;
+}
+
+.new-game-selector .restart button:hover 
+{
+    background: rgb(0, 114, 227);
+    color: #fff;
+}
+
+.new-game-selector .restart button i
+{ 
+    transform: rotateY(180deg);
+    font-size: 16px;
+    
+}
+
+.new-game-selector .mode_selector div 
+{
+    text-align: center;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    font-weight: 700;
+    margin: 1rem;
+    padding-bottom: .5rem;
+    color:rgb(36, 122, 228);
+}
 /* Numbers grid */
 
 .numbers-grid
@@ -339,6 +533,7 @@ header nav p
     justify-content: center;
     align-items: center;
     margin: 0 1.5rem;
+    outline: 2px solid rgb(66, 100, 143);
 }
 
 
@@ -351,6 +546,7 @@ header nav p
     justify-content: center;
     align-items: center;
     border: 1px solid #42648f; 
+    
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
@@ -482,6 +678,7 @@ header nav p
 .command:hover .hint,
 .command:hover .undo,
 .command:hover .erase,
+.command:hover .solver,
 .command:hover .command-title
 {
     color: white;
@@ -675,7 +872,7 @@ header nav p
     color: rgb(250, 79, 81);
 }
 
-.failedCellBg:not(.chosen_cell):not(.passedCell)
+.failedCellBg:not(.chosen_cell):not(.passedCell):not(.correctCell)
 {
     background-color: rgb(247, 207, 214);
 }
@@ -706,7 +903,13 @@ header nav p
 
 /* overlay on smaller screens */
 
-@media only screen and (max-width: 1175px) 
+@media only screen and (min-width: 1241px) {
+    .mobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1240px) 
 {
     .game-grid
     {
@@ -717,18 +920,24 @@ header nav p
     {
         display: flex;
         justify-content: center;
+        align-items: center;
         
     }
 
     .numbers-grid 
     {
         grid-template-columns: repeat(9, auto);
+        width: 100%;
+        justify-content: space-between;
+        outline: none;
     }
 
     .numbers-grid .number {
-        max-width: 60px;
-        height: 60px;
+        border: none;
+        outline: none;
         margin-top: 50px;
+        width: 75px;
+        height: 75px;
     }
 
 
@@ -738,6 +947,7 @@ header nav p
        display: flex;
        justify-content: center;
        align-items: center;
+       color: rgb(0, 114, 227);
     }
 
     .game-control 
@@ -746,14 +956,27 @@ header nav p
         grid-column-gap: 2rem;
         
         
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
     }
+
+   
 
     .command 
     {
         border: none;
         outline: none;
+    }
+
+    .command.solveContainer {
+        width: 150px;
+        height: 75px;
+        grid-column: 1;
+    }
+
+    .game-control.reverse {
+        grid-template-columns: repeat(3, auto);
+        justify-content: center;
     }
 
     .desktop 
@@ -765,25 +988,18 @@ header nav p
     {
         width: 100%;
         height: 100%;
-
+        margin: 0 auto;
     }
 
     .modes
     {
         display: grid;
-        justify-content: center;
-        align-items: center;
-       
-        grid-template-columns: repeat(3, minmax(150px, 1fr));
-        grid-column-gap: 10px;
+        justify-content: space-around;
+        
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-column-gap: 1rem;
+        
     }
-
-    .mode 
-    {
-        width: 1fr; 
-        max-width: 300px;
-    }
-    
 }
 
 /* Login request */
@@ -821,7 +1037,5 @@ header nav p
 
 @media only screen and (min-width: 1921px)
 {
-    .game {
-        
-    }
+    
 }

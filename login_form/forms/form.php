@@ -27,6 +27,9 @@
             <form action="login_form/includes/login.inc.php" method="POST" class="login-form">
                 <input type="text" name="email" placeholder="Your email..."> 
                 <input type="password" name="password" class="password1" placeholder="Your password...">
+                <a href="./reset-password">
+                    <p class="forgot-password">Forgot your password?</p>
+                </a>
                 <div class="checkbox-content">
                     <input type="checkbox" name="remember_user" class="check-box">
                     <span>Remember me</span>

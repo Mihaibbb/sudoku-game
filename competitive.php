@@ -8,8 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku - Competitive Mode</title>
+    
+    
     <link rel="stylesheet" href="styles/style.css" defer>
-    <link rel="stylesheet" href="styles/form.css">
+    <link rel="stylesheet" href="styles/form.css" defer>
     <?php 
         if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
             echo '<script src="scripts/script.js" type="module" defer></script>';
@@ -27,26 +29,32 @@
 
     <?php 
         if (!isset($_SESSION['login_required']) || !$_SESSION['login_required']) {
-            echo '
-                <p class="login_required_message">You need to be logged in to acces this page</p>
-            ';
-            
 
+            echo '
+                <div class="end-game active lose competitive">
+                    <div class="game-result-card competitive">
+                        <p class="login_required_message">You need to be logged in to access this page!</p>
+                        <a href="login_form/forms/signup"><button type="button" class="page_buttons">Create an account here!</button></a>
+                        <a href="login_form/forms/login"><button type="button" class="page_buttons">Log in here!</button></a>
+                    </div>
+                </div>
+            ';
+              
             die();
         }
     ?>
-
 
     <div class="game-mode">Competitive</div>
 
     <div class="end-game">
         <div class="game-result-card">
             <h2 class="result">You've</h2>
-            <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
-            <p class="final-time">Time: <i class="fas fa-clock"></i></p>
-            
-            <button type="submit">New game</button>
-            
+            <form action="update_score/includes/update_score.inc.php" method="post">
+                <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
+                <p class="final-time">Time: <i class="fas fa-clock"></i></p>
+                
+                <button type="submit">New game</button>
+            </form>
         </div>
     </div>
 
@@ -74,7 +82,7 @@
                 </div>
                 <div class="modes">
                     <a href="../Sudoku"><div class="mode">Classic Mode</div></a>
-                    <a href="competitive.php"><div class="mode active">Competitive Mode</div></a>
+                    <a href="competitive"><div class="mode active">Competitive Mode</div></a>
                     <div class="mode">Reverse Mode</div>
                 </div>
                 
@@ -84,12 +92,11 @@
 
             </table>
 
-            
             <div class="game-overlay">
                 
                 <div class="timer desktop">
                     <h2>Timer: <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
-                    <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
+                    <div class="pause-time"></div>
                 </div>
                 
                 <div class="new-game desktop">
@@ -112,7 +119,7 @@
 
                 <div class="game-control">
 
-                    <div class="command">
+                    <div class="command scoreContainer">
                         <div class="player_score">
                             <i class="fas fa-bolt"></i><span class="score">100</span>
                         </div>
@@ -160,7 +167,6 @@
                 
             ?>
 
-            
         </p>
     </div>
 

@@ -17,10 +17,19 @@
     <script src="../scripts/form-validation-login.js" defer></script>
 </head>
 <body>
+
+    <?php 
+        if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
+            header("Location: ../../");
+            die();
+        }
+    ?>
+
     <?php 
         require_once '../../sections/login_header.php';
     ?>
 
+    
     <div class="content">
         <div class="card">
             <div class="title">
@@ -30,6 +39,9 @@
             <form action="../includes/login.inc.php" method="POST" class="login-form">
                 <input type="text" name="email" placeholder="Your email..."> 
                 <input type="password" name="password" class="password1" placeholder="Your password...">
+                <a href="./reset-password">
+                    <p class="forgot-password">Forgot your password?</p>
+                </a>
                 <div class="checkbox-content">
                     <input type="checkbox" name="remember_user" class="check-box">
                     <span>Remember me</span>
@@ -45,6 +57,12 @@
             
         </div>
 
+        <?php 
+            if (isset($_SESSION['password_reseted']) && $_SESSION['password_reseted']) {
+                echo "<span class='create-account-message'> Your password has been successfully reseted!</span>";
+            }
+        ?>
+
         <div class="errors">
             <?php 
 
@@ -53,6 +71,8 @@
                     echo "<div class='error'>Email-ul sau parola sunt gresite</div>";
                     $_SESSION['login_error'] = false;
                 }
+
+                
             ?>
         </div>
         

@@ -64,6 +64,35 @@
     transition: all 300ms ease-in-out;
 }
 
+.page_buttons 
+{
+    border: none;
+    border-radius: 25px;
+    outline: none;
+
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+
+    width: 250px;
+    
+    margin: 7px 0;
+    padding: 10px;
+
+    background-image: linear-gradient(to right, #33ccff 0%, #0066cc 100%);
+    background-size: 125%;
+    color: #fff;
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 250ms ease;
+
+   
+   
+}
+
+
 .forms 
 {
     display: flex;
@@ -110,6 +139,20 @@ form input::placeholder
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     padding-left: 1px;
+}
+
+form.login-form a 
+{
+    align-self: flex-start;
+}
+
+form.login-form p.forgot-password 
+{
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: grey;
+    
+    margin: 5px 55px;
 }
 
 form .checkbox-content 

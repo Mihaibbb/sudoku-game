@@ -255,8 +255,6 @@ export default class ReverseSudoku {
                   </div>`;
             }
         });
-
-
     }
 
     // Continue board if timer is on
@@ -318,12 +316,11 @@ export default class ReverseSudoku {
     }
     
     solveCurrentBoard() {
+        if (this.board.classList.contains('paused')) return;
         const currBoard = this.boardWithCurrentMove();
         console.log((currBoard));
-        if (!this.possibleBoard(currBoard)) {
-            
-            return;
-        } 
+        if (!this.possibleBoard(currBoard)) return;
+        
         console.log('solved');
         solveBoard(this.realTimeBoard);
         
@@ -348,15 +345,25 @@ export default class ReverseSudoku {
                     
                     setTimeout(() => {
                         this.board.classList.remove('inAnimation');
-                    }, 1000);
+                    }, 1500);
                 
                 }
                 
-            }, index * 35);
-           
+            }, index * 35);   
         }
+    }
 
-       
+    erase() {
+        const highlightedCell = document.querySelector('.chosen_cell');
+        if (highlightedCell == null) return;
+        if (highlightedCell.classList.contains('not-editable')) return;
+
+        this.printValue('');
+
+        const currBoard = this.boardWithCurrentMove();
+        if (currBoard === "") return;
+
+        //this.archiveBoards.push(currBoard);
     }
 
     fullBoard() {
@@ -380,7 +387,7 @@ export default class ReverseSudoku {
             cell.classList.remove('not-editable');
             cell.classList.remove('passedCell');
             cell.classList.remove('animation');
-        })
+        });
     }
 
     possibleSolvedBoardAnimation(row, column, number) {

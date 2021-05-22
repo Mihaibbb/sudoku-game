@@ -1,5 +1,6 @@
 <?php 
    session_start();
+   
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
 
     <link rel="stylesheet" href="styles/style.css" defer>
     <link rel="stylesheet" href="styles/form.css">
+    
 
     <script src="scripts/script.js" type="module"></script>
     <script src="./login_form/scripts/form-validation.js" defer></script>
@@ -42,13 +44,16 @@
             <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
             <p class="final-time">Time: <i class="fas fa-clock"></i></p>
             
-            <button type="submit">New game</button>
             
+                <button type="button" class="new-game-submit">New game</button>
+            
+            <button type="button" class="restart-game-submit">Restart <i class="fas fa-redo"></i></button> 
         </div>
+        
     </div>
-
+    
     <div class="game">
-
+    
         <div class='success'>
             <?php 
                 if (isset($_SESSION['create_account_message']) && $_SESSION['create_account_message']) {
@@ -56,11 +61,25 @@
                     $_SESSION['create_account_message'] = false;
                 }
 
-                if (isset($_SESSION['login_success_message']) && $_SESSION['login_success_message']) {
+                if (isset($_SESSION['login_success_message']) && $_SESSION['login_success_message'] && isset($_SESSION['username'])) {
                     echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "!</span>";
                     $_SESSION['login_success_message'] = false;
                 }
             ?>
+        </div>
+
+        <div class="difficulties">
+            
+            
+        </div>
+
+        <div class="timer mobile">
+                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                    <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
+        </div>
+
+        <div class="new-game mobile">
+            <h1>New Game</h1>
         </div>
 
         <div class="game-grid">
@@ -70,9 +89,16 @@
                     <h1>Game Modes</h1>
                 </div>
                 <div class="modes">
-                    <div class="mode active">Classic Mode</div>
-                    <a href="competitive.php"><div class="mode">Competitive Mode</div></a>
-                    <a href="reverse.php"><div class="mode">Reverse Mode</div></a>
+                    <div class="mode active classic">Classic Mode</div>
+                    <a href="competitive"><div class="mode competitive">Competitive Mode</div></a>
+                    <a href="reverse"><div class="mode reverse">Reverse Mode</div></a>
+                </div>
+
+                
+                <div class="modes">
+                    <div class="difficulty active">Easy</div>
+                    <div class="difficulty">Medium</div>
+                    <div class="difficulty">Hard</div>
                 </div>
                 
             </div> 
@@ -85,12 +111,26 @@
             <div class="game-overlay">
                 
                 <div class="timer desktop">
-                    <h2>Timer: <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
                     <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
                 </div>
                 
                 <div class="new-game desktop">
                     <h1>New Game</h1>
+                </div>
+
+                <div class="new-game-selector">
+                    <h1>Select difficulty</h1>
+
+                    <div class="mode_selector">
+                        <div class="easy">Easy</div>
+                        <div class="medium">Medium</div>
+                        <div class="hard">Hard</div>
+                    </div>
+
+                    <div class="restart">
+                        <button type="button"><i class="fas fa-redo"></i> Restart </button>
+                    </div>
                 </div>
 
                 <div class="numbers-grid">
@@ -109,7 +149,7 @@
 
                 <div class="game-control">
 
-                    <div class="command">
+                    <div class="command scoreContainer">
                         <div class="player_score">
                             <i class="fas fa-bolt"></i><span class="score">100</span>
                         </div>
@@ -137,6 +177,8 @@
                 
             </div>
         </div>
+
+        
 
         <p class="login_request">
             <?php 

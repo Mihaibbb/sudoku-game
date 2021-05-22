@@ -69,9 +69,9 @@
                     <h1>Game Modes</h1>
                 </div>
                 <div class="modes">
-                    <a href="./"><div class="mode">Classic Mode</div></a>
-                    <a href="competitive.php"><div class="mode">Competitive Mode</div></a>
-                    <div class="mode active">Reverse Mode</div>
+                    <a href="./"><div class="mode classic">Classic Mode</div></a>
+                    <a href="competitive"><div class="mode competitive">Competitive Mode</div></a>
+                    <div class="mode reverse active">Reverse Mode</div>
                 </div>
                 
             </div> 
@@ -84,7 +84,7 @@
             <div class="game-overlay">
                 
                 <div class="timer desktop">
-                    <h2>Timer: <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
                     <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
                 </div>
                 
@@ -106,11 +106,11 @@
 
                 </div>
 
-                <div class="game-control">
+                <div class="game-control reverse">
 
                     <div class="command solveContainer">
                         <div class="solver"><i class="fas fa-tools"></i></div>
-                        <div class="command-title">Solve</div>
+                        <div class="command-title">Solve!</div>
                     </div>
 
                     <div class="command undoContainer">
