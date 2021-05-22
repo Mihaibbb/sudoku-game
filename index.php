@@ -68,10 +68,7 @@
             ?>
         </div>
 
-        <div class="difficulties">
-            
-            
-        </div>
+        
 
         <div class="timer mobile">
                     <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
@@ -103,9 +100,18 @@
                 
             </div> 
 
-            <table class="board">
+           
+                <div class="difficulties">
+                    <h1 class="easy">Easy</h1>
+                
+                </div>
 
-            </table>
+                <table class="board">
+
+                </table>
+           
+
+            
 
             
             <div class="game-overlay">
