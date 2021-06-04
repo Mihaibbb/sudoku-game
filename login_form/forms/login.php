@@ -33,7 +33,7 @@
     <div class="content">
         <div class="card">
             <div class="title">
-                <h1>Log in!</h1>
+                <h1>Login</h1>
             </div>
             
             <form action="../includes/login.inc.php" method="POST" class="login-form">

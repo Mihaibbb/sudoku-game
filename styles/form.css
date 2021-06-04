@@ -178,7 +178,7 @@ form .checkbox-content span
     margin-left: 3px;
 }
 
-form button 
+form:not(.check_score) button 
 {
     border: none;
     border-radius: 25px;

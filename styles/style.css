@@ -58,22 +58,93 @@ header nav p
     user-select: none;
 }
 
-.difficulties {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+header nav .switch 
+{
     position: relative;
-    z-index: 1000;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: .43rem;
+}
+
+header nav .switch input 
+{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+header nav .switch .round 
+{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 35px;
+    transition: all 350ms ease-in-out;
+}
+
+
+header nav .switch .round::before 
+{
+    position: absolute;
+    content: "";
+    height: 26px; 
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 100%;
+    transition: all 350ms ease-in-out;
+}
+
+
+header nav .switch input:checked + .round::before
+{
+    transform: translateX(100%);
+    
+}
+
+
+header nav .switch input:checked + .round 
+{
+    background:rgb(36, 122, 228);
+}
+
+.difficulties {
+    align-self: flex-start;
+    justify-self: flex-start;
+    position: relative;
+    top: -50px;
+    left: 60px;
     
 }
 
 .difficulties h1 {
-    
-    font-size: 2rem;
-    letter-spacing: 2px;
-    user-select: none;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 30px;
+    text-transform: capitalize;
 }
 
+.easy 
+{
+    color: green;
+}
+
+.medium 
+{
+    color: #ed790c;
+    
+}
+
+.hard 
+{
+    color: crimson;
+}
 
 
 .game-mode 
@@ -84,7 +155,7 @@ header nav p
 .end-game 
 {
     position: absolute;
-    background: rgba(0, 0, 0, .85);
+    background: rgba(0, 0, 0, .55);
     top: 0;
     bottom: 0;
     left: 0;
@@ -184,7 +255,8 @@ header nav p
 }
  
 
-.end-game:not(.competitive) .game-result-card button 
+.end-game:not(.competitive) .game-result-card button,
+.end-game .game-result-card .check_score .new-game-btn
 {
     outline: none;
     border: 2px solid rgb(0, 114, 227);
@@ -246,6 +318,7 @@ header nav p
     color: green;
     font-family: 'Lato', sans-serif;
     transition: all 500ms ease-in-out;
+    transform: translateY(-50px);
 }
 
 .success.hide 
@@ -301,7 +374,7 @@ header nav p
     height: 100%;
     
     justify-content: center;
-    align-content: center;
+   
     align-items: center;
     position: relative;
     z-index: 0;
@@ -327,8 +400,10 @@ header nav p
    width: 250px;
    height: 550px;
    margin: 0 3rem;
-
+   
 }
+
+
 
 
 .mode_title 
@@ -415,6 +490,11 @@ header nav p
     user-select: none;
     cursor: pointer;
     transition: all 350ms ease-in-out;
+}
+
+.new-game.mobile 
+{
+    margin: 0 auto;
 }
 
 .new-game h1
@@ -597,7 +677,9 @@ header nav p
     transition: all 350ms ease;
 }
 
-.command.solveContainer
+
+.command.solveContainer,
+.command.scoreContainer.competitive
 {
     grid-column: 1 / span 2;
     grid-row: 1;
@@ -705,8 +787,6 @@ header nav p
     width: 100%;
     max-width: 600px;
     position: relative;
-    height: 100%;
-    min-height: 600px;
 }
 
 .board, .game-row, .game-cell
@@ -807,43 +887,43 @@ header nav p
 
 .game-row:first-child .game-cell
 {
-    border-top: 2px solid #344861;
+    border-top: 3px solid #344861;
 
 }
 
 .game-row:first-child .game-cell:first-child
 {
-    border-left: 2px solid #344861;
+    border-left: 3px solid #344861;
 }
 
 .game-row:first-child .game-cell:last-child
 {
-    border-right: 2px solid #344861;
+    border-right: 3px solid #344861;
 }
 
 .game-row:nth-child(n) .game-cell:first-child
 {
-    border-left: 2px solid #344861;
+    border-left: 3px solid #344861;
 }
 
 .game-row:nth-child(n) .game-cell:last-child
 {
-    border-right: 2px solid #344861;
+    border-right: 3px solid #344861;
 }
 
 .game-row:last-child .game-cell
 {
-    border-bottom: 2px solid #344861;
+    border-bottom: 3px solid #344861;
 }
 
 .game-row:nth-child(n) .game-cell:nth-child(3n)
 {
-    border-right: 2px solid #344861;
+    border-right: 3px solid #344861;
 }
 
 .game-row:nth-child(3n) .game-cell:nth-child(n)
 {
-    border-bottom: 2px solid #344861;
+    border-bottom: 3px solid #344861;
 }
 
 .chosen_cell
@@ -867,7 +947,7 @@ header nav p
     color: rgb(60, 194, 60);
 }
 
-.failedCell
+.failedCell:not(.correctCell)
 {
     color: rgb(250, 79, 81);
 }
@@ -903,14 +983,31 @@ header nav p
 
 /* overlay on smaller screens */
 
+
+
 @media only screen and (min-width: 1241px) {
     .mobile {
         display: none;
+    }
+
+    .game_modes:not(.reverse)
+    {
+        transform: translateX(3rem);
     }
 }
 
 @media only screen and (max-width: 1240px) 
 {
+
+
+    .difficulties 
+    {
+        align-self: initial;
+        justify-self: initial;
+        top: 0;
+        left: 0;
+    }
+
     .game-grid
     {
         flex-direction: column;
@@ -986,9 +1083,11 @@ header nav p
 
     .game_modes
     {
+        
         width: 100%;
         height: 100%;
-        margin: 0 auto;
+        margin: -1rem auto;
+        
     }
 
     .modes
@@ -998,6 +1097,7 @@ header nav p
         
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         grid-column-gap: 1rem;
+        
         
     }
 }
@@ -1016,26 +1116,80 @@ header nav p
     cursor: pointer;
 }
 
+@media only screen and (max-width: 650px)
+{
+    .modes 
+    {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 601px)
+{
+    .board 
+    {
+        min-height: 600px;
+    }
+}
+
 @media only screen and (max-width: 600px) 
 {
-    
+    .board 
+    {
+       
+    }
 }
 
 @media only screen and (max-width: 500px)
 {
-    
+    .game-cell
+    {
+        font-size: 26px;
+    }
+}
+
+@media only screen and (max-width: 450px)
+{
+    .game-cell
+    {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 400px)
+{
+    .game-cell
+    {
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 350px)
+{
+    .game-cell
+    {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 300px)
+{
+    .game-cell
+    {
+        font-size: 18px;
+    }
 }
 
 @keyframes cellAnimation {
+
     25% {
         color: rgb(52, 72, 97);
     }  
+
     100% {
         color:rgb(60, 194, 60);
     }
 }   
-
-@media only screen and (min-width: 1921px)
-{
-    
-}

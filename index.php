@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="styles/style.css" defer>
     <link rel="stylesheet" href="styles/form.css">
@@ -44,9 +44,7 @@
             <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
             <p class="final-time">Time: <i class="fas fa-clock"></i></p>
             
-            
-                <button type="button" class="new-game-submit">New game</button>
-            
+            <button type="button" class="new-game-submit">New game</button>
             <button type="button" class="restart-game-submit">Restart <i class="fas fa-redo"></i></button> 
         </div>
         
@@ -57,12 +55,12 @@
         <div class='success'>
             <?php 
                 if (isset($_SESSION['create_account_message']) && $_SESSION['create_account_message']) {
-                    echo "<span class='create-account-message'>Your account was successfully created!</span>";
+                    echo "<span class='create-account-message'>Your account was successfully created</span>";
                     $_SESSION['create_account_message'] = false;
                 }
 
                 if (isset($_SESSION['login_success_message']) && $_SESSION['login_success_message'] && isset($_SESSION['username'])) {
-                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "!</span>";
+                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "</span>";
                     $_SESSION['login_success_message'] = false;
                 }
             ?>
@@ -70,14 +68,9 @@
 
         
 
-        <div class="timer mobile">
-                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
-                    <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
-        </div>
+        
 
-        <div class="new-game mobile">
-            <h1>New Game</h1>
-        </div>
+        
 
         <div class="game-grid">
             
@@ -91,6 +84,14 @@
                     <a href="reverse"><div class="mode reverse">Reverse Mode</div></a>
                 </div>
 
+                <div class="timer mobile">
+                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                    <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
+                </div>
+
+                <div class="new-game mobile">
+                    <h1>New Game</h1>
+                </div>
                 
                 <div class="modes">
                     <div class="difficulty active">Easy</div>
@@ -105,6 +106,7 @@
                     <h1 class="easy">Easy</h1>
                 
                 </div>
+                
 
                 <table class="board">
 
@@ -189,17 +191,17 @@
         <p class="login_request">
             <?php 
                 if (!isset($_SESSION['signup_success']) && !isset($_SESSION['login_success'])) {
-                    echo 'Don\'t have an account? Sign Up <span class="sign-up-form">here!</span>';
+                    echo 'Don\'t have an account? Sign Up <span class="sign-up-form">here</span>';
                     die();    
                 }
 
                 if (!isset($_SESSION['login_success']) || !$_SESSION['login_success']) {
-                    echo 'Log in <span class="sign-up-form">here!</span>';    
+                    echo 'Log in <span class="sign-up-form">here</span>';    
                     
                 }
 
                 if (isset($_SESSION['login_success']) && !$_SESSION['login_success']) {
-                    echo '<p class="fail">Your email or password is incorrect!</p>';
+                    echo '<p class="fail">Your email or password is incorrect</p>';
                     unset($_SESSION['login_success']);
                 }
                 

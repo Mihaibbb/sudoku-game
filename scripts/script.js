@@ -8,8 +8,19 @@ let sudokuBoard = [];
 
     const endGame = document.querySelector('.end-game');
     const gameMode = document.querySelector('.game-mode').innerText.toLowerCase();
+    const table = document.querySelector(".board");
+    const difficulty = document.querySelector(".difficulties h1");
 
-    await checkEndGame();
+    if (localStorage.getItem(gameMode + "-difficulty") !== null) {
+        difficulty.innerText = JSON.parse(localStorage.getItem(gameMode + "-difficulty"));
+        difficulty.classList.remove("easy");
+        difficulty.classList.remove("medium");
+        difficulty.classList.remove("hard");
+        difficulty.classList.add(difficulty.innerText.toLowerCase());
+        if (difficulty.classList.contains("medium") && window.innerWidth > 1250) {
+            table.style.marginLeft = "-50px";
+        }
+    }
 
     let newSudokuBoard;
 
@@ -24,7 +35,12 @@ let sudokuBoard = [];
     let numberOfHours = await getLocalStoredNumberOfHours(gameMode);
     let timeTarget = numberOfMinutes >= 5 ? numberOfMinutes + 1 : 5;
 
-    
+    if (screen.width > 1920) {
+        const scaleX = screen.width / 1920;
+        gameElement.style.transform = 'scale(' + scaleX + ')';
+    } else {
+        gameElement.style.transform = 'scale(1.00001)';
+    }
 
     // Header items
     const sudokuGameItem = document.querySelector('.sudoku_game_item');
@@ -50,7 +66,7 @@ let sudokuBoard = [];
     });
 
     
-    const board = document.querySelector('table.board');
+    const board = document.querySelector('.board');
     const score = document.querySelector('.score');
 
     if (localStorage.getItem(gameMode + "-score") !== null) {
@@ -92,6 +108,7 @@ let sudokuBoard = [];
     // Click event on cell
     const cells = document.querySelectorAll('.game-cell');
     const dataNumbers = document.querySelectorAll('[data-number]');
+    const rows = document.querySelectorAll('.game-row');
 
     // Compute buttons
     const scoreButton = document.querySelector('.scoreContainer');
@@ -106,8 +123,27 @@ let sudokuBoard = [];
     const hintTitle = hintButton.querySelector('.command-title');
     const undoTitle = undoButton.querySelector('.command-title');
     const eraseTitle = eraseButton.querySelector('.command-title');
-
     
+    // Responsive resize event listener
+    window.addEventListener('resize', () => {
+        
+        let currWidth = window.innerWidth 
+        || document.documentElement.clientWidth 
+        || document.body.clientWidth;
+
+        if (currWidth > 600) return;
+        currWidth -= 25;
+
+        table.style.height = `${currWidth}px`;
+        
+        cells.forEach(cell => {
+            cell.style.width = `${currWidth / 9}px`;
+            cell.style.height = `${currWidth / 9}px`;
+        });
+
+        
+    });
+
 
     cells.forEach((cell, indexElement) => {
 
@@ -120,20 +156,10 @@ let sudokuBoard = [];
             // Event for key numbers
             
             document.addEventListener('keydown', e => {
-            
-                if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && isNaN(parseInt(e.key))) return;
-                
-                // if (isNaN(parseInt(e.key))) {
-                //     const currentHighlightedCell = [...game.allCells].find(cell => {
-                //         return cell.classList.contains('chosen_cell');
-                //     });
-                    
-                //     const pos = game.findCellPosition(currentHighlightedCell);
-                //     console.log(pos);
-                //     const newRowPos = Math.floor(pos / 9);
-                //     const newCellPos = pos % 9;
-                //     game.cellHighlightArrowKey(e.key, cell, newCellPos, newRowPos);
-                // }
+
+                if (e.key === "Backspace") {
+                    game.erase();
+                }
 
                 if (parseInt(e.key) > 0 && parseInt(e.key) < 10) {
                     if (endGame.classList.contains('win') || endGame.classList.contains('lose')) return;
@@ -145,7 +171,7 @@ let sudokuBoard = [];
                         endGame.classList.add('win');
                         game.gameFinal('won');
                         localStorage.setItem(gameMode + "-end-game", JSON.stringify('won'));
-                        game.pauseBoard();
+                        timer.classList.add("paused");
                         return;
                     } 
 
@@ -153,7 +179,7 @@ let sudokuBoard = [];
                     endGame.classList.add('lose');
                     game.gameFinal('lost');
                     localStorage.setItem(gameMode + "-end-game", JSON.stringify('lost'));
-                    game.pauseBoard();
+                    timer.classList.add("paused");
                 }
             });
 
@@ -177,8 +203,15 @@ let sudokuBoard = [];
                     endGame.classList.add('lose');
                     game.gameFinal('lost');
                     localStorage.setItem(gameMode + "-end-game", JSON.stringify('lost'));
-                    game.pauseBoard();
+                    timer.classList.add("paused");
                 });
+            });
+
+
+            // Backspace event
+
+            document.addEventListener("keydown", e => {
+                
             });
 
             // Erase button event     
@@ -200,7 +233,7 @@ let sudokuBoard = [];
                 endGame.classList.add('win');
                 game.gameFinal('won');
                 localStorage.setItem(gameMode + "-end-game", JSON.stringify('won'));
-                game.pauseBoard();
+                timer.classList.add("paused");
             });
         });
     });
@@ -323,12 +356,7 @@ let sudokuBoard = [];
 
     const counter = () => {
 
-        if (screen.width > 1920) {
-            const scaleX = screen.width / 1920;
-            gameElement.style.transform = 'scale(' + scaleX + ')';
-        } else {
-            gameElement.style.transform = 'scale(1)';
-        }
+       
 
         if (timer.classList.contains('paused')) return;
 
@@ -390,7 +418,7 @@ let sudokuBoard = [];
                 game.gameResult = 'lose';
                 game.gameFinal('lost');
                 localStorage.setItem(gameMode + "-end-game", JSON.stringify('lost'));
-                game.pauseBoard();
+                timer.classList.add("paused");
             }
 
             timeTarget++;
@@ -435,34 +463,68 @@ let sudokuBoard = [];
     // New game button
 
     const newGameButton = document.querySelector(".new-game.desktop");
-    console.log(newGameButton)
+    
     const newGameSelector = document.querySelector(".new-game-selector");
+
     newGameButton.addEventListener('click', () => {
         newGameSelector.classList.toggle('show_selector');
-        console.log(newGameSelector);
     });
+
+    document.addEventListener('click', e => {
+        
+        if (e.target === newGameButton && newGameSelector.classList.contains("show_selector")) return;
+        console.log('over')
+        
+        const newGameSelectorNodes = newGameSelector.querySelectorAll("*");
+        let childNodeTarget = false;
+        newGameSelectorNodes.forEach(node => {
+            if (node === e.target) childNodeTarget = true;
+        });
+        const newGameButtonTextContent = newGameButton.querySelector("h1");
+        if (e.target === newGameButton || e.target === newGameButtonTextContent) childNodeTarget = true;
+
+        if (!childNodeTarget) newGameSelector.classList.remove('show_selector');
+    });
+
+    
 
     // New game submit
 
     const newGameSubmit = document.querySelector('.new-game-submit');
-    newGameSubmit.addEventListener('click', () => {
-        localStorage.clear();
-        
-        window.location.href = "./";
-    });
+    if (newGameSubmit !== null) {
+        newGameSubmit.addEventListener('click', () => {
+            localStorage.clear();
+            
+            window.location.href = "./";
+        });
+    }
 
+    const newGameSubmitCompetitive = document.querySelector(".check_score .new-game-btn");
+   
+    if (newGameSubmitCompetitive !== null) {
+        newGameSubmitCompetitive.addEventListener("click", () => {
+            newLocalStorage();
+        });
+        
+    }
+   
     // Restart game submit
 
     const restartGameSubmit = document.querySelector(".restart-game-submit");
-    restartGameSubmit.addEventListener('click', () => {
-        resetLocalStorage();    
-    });
-
+    if (restartGameSubmit !== null) {
+        restartGameSubmit.addEventListener('click', () => {
+            resetLocalStorage();    
+        });    
+    }   
+    
     const restartGameButton = document.querySelector(".restart button");
-    restartGameButton.addEventListener('click', () => {
-        resetLocalStorage();
-    });
 
+    if (restartGameButton !== null) {
+        restartGameButton.addEventListener('click', () => {
+            resetLocalStorage();
+        });    
+    }
+    
     // new game difficulty
 
     const difficulties = document.querySelectorAll(".mode_selector div");
@@ -528,6 +590,9 @@ let sudokuBoard = [];
         hintTitle.innerText = 'Hint';
         undoTitle.innerText = 'Undo';
         eraseTitle.innerText = 'Erase';  
+        if (difficulty.innerText === "Usor") difficulty.innerText = "Easy";
+        if (difficulty.innerText === "Mediu") difficulty.innerText = "Medium";
+        if (difficulty.innerText === "Greu") difficulty.innerText = "Hard";
     }
 
     const changeLangToRo = () => {
@@ -560,6 +625,9 @@ let sudokuBoard = [];
         hintTitle.innerText = 'Indiciu';
         undoTitle.innerText = 'Înapoi';
         eraseTitle.innerText = 'Ștergere';
+        if (difficulty.innerText === "Easy") difficulty.innerText = "Usor";
+        if (difficulty.innerText === "Medium") difficulty.innerText = "Mediu";
+        if (difficulty.innerText === "Hard") difficulty.innerText = "Greu";
     }
 
     async function checkEndGame() {
@@ -642,8 +710,11 @@ let sudokuBoard = [];
             localStorage.removeItem(gameMode + "-hint-coords-3");
         }
 
-
-        window.location.href = "./"; 
+        if (gameMode === "classic") {
+            window.location.href = "./"; 
+        } else {
+            window.location.href = "./competitive";
+        }
     }
 
     function newLocalStorage() {
@@ -669,7 +740,12 @@ let sudokuBoard = [];
             localStorage.removeItem(gameMode + "-hint-coords-3");
         }
 
-        window.location.href = "./"; 
+        if (gameMode === "classic") {
+            window.location.href = "./"; 
+        } else {
+            window.location.href = "./competitive";
+        }
+        
     }
     
 })();

@@ -4,6 +4,7 @@ export default class Sudoku {
         
         this.game = game;
         this.board = board;
+        
         this.score = score;
         this.hintCounter = hintCounter;
         this.gameMode = gameMode.toLowerCase();
@@ -31,7 +32,7 @@ export default class Sudoku {
         if (this.archiveBoards !== undefined) {
             if (this.archiveBoards[this.archiveBoards.length - 1] === currentBoard) return "";
         }
-    
+        console.log(currentBoard);
         return currentBoard;
         
     }
@@ -347,6 +348,7 @@ export default class Sudoku {
                 if (this.mistakeBoard[this.cellX][this.cellY] !== number) {
                     this.mistakeBoard[this.cellX][this.cellY] = number;
                     this.score.innerText = parseInt(this.score.innerText) - 3 < 0 ? "0" : parseInt(this.score.innerText) - 3;   
+                    
                     localStorage.setItem(this.gameMode + "-score", JSON.stringify(this.score.innerText));
                     if (parseInt(this.score.innerText) == 0) {
                         this.gameRunning = false;
@@ -538,11 +540,14 @@ export default class Sudoku {
         if (highlightedCell.classList.contains('not-editable')) return;
 
         this.printValue('');
+        
 
         const currBoard = this.boardWithCurrentMove();
         if (currBoard === "") return;
-
+        
+        localStorage.setItem(this.gameMode + "-board", JSON.stringify(currBoard));
         this.archiveBoards.push(currBoard);
+        
     }
 
     undo() {
@@ -643,8 +648,18 @@ export default class Sudoku {
         const timeMinutes = document.querySelector('.timer.desktop span.minutes');
         console.log(timeMinutes.innerText);
         const timeSeconds = document.querySelector('.timer.desktop span.seconds');
-        finalTime.innerHTML = 'Time: <span class="game-result"><i class="fas fa-clock"></i>' + (timeHours.innerText === "" ? "" : timeHours.innerText + ":") + timeMinutes.innerText + ":" + timeSeconds.innerText + "</span>";`Time: <span class="game-result"><i class="fas fa-clock"></i> ${timeHours.innerText === "" ? "" : timeHours.innerText + ":"} ${timeMinutes.innerText + ":"} ${timeSeconds.innerText} </span>`;
-    
+        finalTime.innerHTML = 'Time: <span class="game-result"><i class="fas fa-clock"></i>' + (timeHours.innerText === "" ? "" : timeHours.innerText + ":") + timeMinutes.innerText + ":" + timeSeconds.innerText + "</span>";
+        
+        if (this.gameMode === "classic") return;
+
+        const submitButton = document.querySelector(".new-game-btn");
+        submitButton.setAttribute("type", "submit");
+
+        const scoreSubmit = document.querySelector(".score_submit");
+        const timeSubmit = document.querySelector(".time_submit");
+        scoreSubmit.value = this.score.innerText;
+        timeSubmit.value = (timeHours.innerText === "" ? "" : timeHours.innerText + ":") + timeMinutes.innerText + ":" + timeSeconds.innerText;
+
         // Cause of lose
     }
 

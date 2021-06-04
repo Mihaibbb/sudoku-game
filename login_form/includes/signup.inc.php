@@ -29,7 +29,7 @@ while ($row = $my_result->fetch_assoc()) {
     }
 }
 
-$sql = "INSERT INTO users (name, username, email, password) VALUES ('$name', '$username', '$email', '$hash_password')";
+$sql = "INSERT INTO users (name, username, email, password, time_played, score) VALUES ('$name', '$username', '$email', '$hash_password', '0', '0')";
 $result = mysqli_query($conn, $sql);
 
 $_SESSION['create_account_message'] = true;

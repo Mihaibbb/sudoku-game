@@ -64,7 +64,7 @@
 
         <div class="game-grid">
             
-            <div class="game_modes">
+            <div class="game_modes reverse">
                 <div class="mode_title">
                     <h1>Game Modes</h1>
                 </div>
@@ -110,7 +110,7 @@
 
                     <div class="command solveContainer">
                         <div class="solver"><i class="fas fa-tools"></i></div>
-                        <div class="command-title">Solve!</div>
+                        <div class="command-title">Solve</div>
                     </div>
 
                     <div class="command undoContainer">

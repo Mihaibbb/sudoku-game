@@ -345,7 +345,7 @@ export default class ReverseSudoku {
                     
                     setTimeout(() => {
                         this.board.classList.remove('inAnimation');
-                    }, 1500);
+                    }, 1800);
                 
                 }
                 

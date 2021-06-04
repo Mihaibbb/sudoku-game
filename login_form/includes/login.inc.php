@@ -17,6 +17,7 @@ while ($row = $result->fetch_assoc()) {
         $_SESSION['username'] = $row['username'];
         $_SESSION['email'] = $row['email'];
         $_SESSION['user_id'] = $row['id'];
+        $_SESSION['score'] = $row['score'];
         $_SESSION['login_success'] = true;
         $_SESSION['login_success_message'] = true;
         $_SESSION['login_required'] = true;
