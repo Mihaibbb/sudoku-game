@@ -33,7 +33,7 @@
     <div class="content">
         <div class="card">
             <div class="title">
-                <h1>Sign Up!</h1>
+                <h1>Signup</h1>
             </div>
             
             <form action="../includes/signup.inc.php" method="POST" class="signup-form">

@@ -14,8 +14,14 @@ class FormValidation {
 
     checkValidEmail() {
         const email = this.form.querySelector('.email').value;
-        if (email.length < 8) return false;     
-        if (!email.includes('@')) return false;
+        if (email.length < 8) return false;
+        let numberOfArounds = 0;
+
+        for (let i = 0; i < email.length; i++) {
+            if (email[i] === "@") numberOfArounds++;
+        }     
+        
+        if (numberOfArounds !== 1) return false;
 
         return true;
     }

@@ -46,16 +46,22 @@
 
     <div class="game-mode">Competitive</div>
 
-    <div class="end-game">
+    <div class="end-game"> 
         <div class="game-result-card">
             <h2 class="result">You've</h2>
-            <form action="update_score/includes/update_score.inc.php" method="post">
-                <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
-                <p class="final-time">Time: <i class="fas fa-clock"></i></p>
-                
-                <button type="submit">New game</button>
+            <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
+            <p class="final-time">Time: <i class="fas fa-clock"></i></p>
+            
+            <form action="./update_score/includes/update_score.inc.php" method="post" class="check_score">
+                <input type="hidden" name="score" class="score_submit">
+                <input type="hidden" name="time" class="time_submit">
+                <button class="new-game-btn">New game</button>
             </form>
+            
+            
+            
         </div>
+        
     </div>
 
     <div class="game">
@@ -76,17 +82,22 @@
 
         <div class="game-grid">
             
-            <div class="game_modes">
+            <div class="game_modes competitive">
                 <div class="mode_title">
                     <h1>Game Modes</h1>
                 </div>
                 <div class="modes">
                     <a href="../Sudoku"><div class="mode">Classic Mode</div></a>
-                    <a href="competitive"><div class="mode active">Competitive Mode</div></a>
-                    <div class="mode">Reverse Mode</div>
+                    <div class="mode active">Competitive Mode</div>
+                    <a href="reverse"><div class="mode">Reverse Mode</div></a>
                 </div>
                 
             </div> 
+
+            <div class="difficulties">
+                    <h1 class="easy">Easy</h1>
+                
+                </div>
 
             <table class="board">
 
@@ -101,6 +112,18 @@
                 
                 <div class="new-game desktop">
                     <h1>New Game</h1>
+                </div>
+
+                <div class="new-game-selector">
+                    <h1>Select difficulty</h1>
+
+                    <div class="mode_selector">
+                        <div class="easy">Easy</div>
+                        <div class="medium">Medium</div>
+                        <div class="hard">Hard</div>
+                    </div>
+
+                   
                 </div>
 
                 <div class="numbers-grid">
@@ -119,14 +142,14 @@
 
                 <div class="game-control">
 
-                    <div class="command scoreContainer">
+                    <div class="command scoreContainer competitive">
                         <div class="player_score">
                             <i class="fas fa-bolt"></i><span class="score">100</span>
                         </div>
                         <div class="command-title">Score</div>
                     </div>
 
-                    <div class="command hintContainer not-clickable">
+                    <div class="command hintContainer not-clickable hide">
                         <div class="hint">
                             <i class="far fa-lightbulb"></i>
                             <div class="hint-counter">3</div>
@@ -148,26 +171,7 @@
             </div>
         </div>
 
-        <p class="login_request">
-            <?php 
-                if (!isset($_SESSION['signup_success'])) {
-                    echo 'Don\'t have an account? Sign Up <span class="sign-up-form">here!</span>';
-                    die();    
-                }
-
-                if (!isset($_SESSION['login_success']) || !$_SESSION['login_success']) {
-                    echo 'Log in <span class="sign-up-form">here!</span>';    
-                    
-                }
-
-                if (isset($_SESSION['login_success']) && !$_SESSION['login_success']) {
-                    echo '<p class="fail">Your email or password is incorrect!</p>';
-                    unset($_SESSION['login_success']);
-                }
-                
-            ?>
-
-        </p>
+        
     </div>
 
     

@@ -8,6 +8,8 @@ const timerText = timer.querySelector('.timer_text');
 if (screen.width > 1920) {
     const scaleX = screen.width / 1920;
     gameElement.style.transform = 'scale(' + scaleX + ')';
+} else {
+    gameElement.style.transform = 'scale(1.00001)';
 }
 
 const game = new ReverseSudoku(gameElement, board, timer);
@@ -257,7 +259,7 @@ const changeLangToEn = () => {
     reverseMode.innerText = 'Reverse Mode';
     timerText.innerText = 'Timer:';
     newGame.innerText = 'New Game';
-    solveTitle.innerText = 'Solve!';
+    solveTitle.innerText = 'Solve';
     undoTitle.innerText = 'Undo';
     eraseTitle.innerText = 'Erase';  
 }
@@ -288,7 +290,7 @@ const changeLangToRo = () => {
     reverseMode.innerText = 'Modul Invers';
     timerText.innerText = 'Timp:';
     newGame.innerText = 'Joc Nou';
-    solveTitle.innerText = 'Rezolvă!'
+    solveTitle.innerText = 'Rezolvă'
     undoTitle.innerText = 'Înapoi';
     eraseTitle.innerText = 'Ștergere';
 }
