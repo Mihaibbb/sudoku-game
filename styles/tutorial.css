@@ -1,0 +1,119 @@
+.tutorial_title h1
+{
+    text-align: center;
+    color: rgb(36,122,228);
+    font-size: 3rem;
+}
+
+.init
+{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    
+}
+
+.item
+{
+    margin: 0 3rem;
+}
+
+.item-title 
+{
+    font-size: 1.5rem;
+    font-family: "Open Sans", sans-serif;
+    color: rgb(23, 47, 77);
+}
+
+.item-content
+{
+    font-size: 1.2rem;
+    width: 100%;
+    color: #6e7c8c;
+    font-family: "Source Sans Pro", sans-serif;
+    line-height: 2rem;
+}
+
+.items .item-title h2
+{
+    text-align: center;
+    color: rgb(36,122,228);
+    font-size: 3rem;
+}
+
+.item-content.play 
+{
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 98rem;
+    margin: 0 auto;
+}
+
+.title-content
+{
+    color: rgb(9, 33, 61);
+    margin: 10rem auto 0;
+    text-align: center;
+    font-size: 30px;
+}
+
+.item-content .text
+{
+    margin: 3rem auto 0;
+    align-self: flex-start;
+}
+
+.image.content
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-content .image 
+{
+    align-self: flex-start;
+
+}
+
+.image video 
+{
+    transform: translateX(5rem);
+}
+
+.item-content .text p
+{
+    color:rgb(35, 72, 116);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 42px;
+     
+}
+
+.item-content .text .tabbed
+{
+    margin: -.5rem 0 -.5rem 1.5rem;
+    color: rgb(9, 33, 61);
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+.item-content .image img
+{
+    box-shadow: 5px 0px 15px rgb(75,143,244),
+                -5px 10px 50px rgb(71,111,211);
+    transform: scale(.8);
+}
+
+.item-content .text .image 
+{
+   margin: 0 auto;
+}
+
+.item-content .text .image img 
+{
+    transform: scale(.7);
+}

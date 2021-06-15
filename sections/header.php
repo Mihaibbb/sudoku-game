@@ -9,6 +9,7 @@
              }
         ?>
         <a href="./"><p class="sudoku_game_item">Sudoku Game</p></a>
+        <a href="./tutorial"><p>Tutorial</p></a>
         <p class="tips_and_tricks_item">Sudoku Tips & Tricks</p>
         <a href="leaderboard"><p>Leaderboard</p></a>
 
@@ -27,11 +28,10 @@
             }
         ?>
 
-        
-        <label class="switch">
-            <input type="checkbox">
-            <span class="round"></span>
-        </label>
+    <div class="dark_mode">
+        <i class="fas fa-moon"></i>
+    </div>
+   
        
             
     </nav>

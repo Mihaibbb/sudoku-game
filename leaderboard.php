@@ -12,7 +12,7 @@
     <?php require_once "./sections/fonts.php"; ?>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/leaderboard.css">
-    <script src="./scripts/leaderboardSearch.js" defer></script>
+    <script src="./scripts/leaderboard.js" defer></script>
 </head>
 <body>
 

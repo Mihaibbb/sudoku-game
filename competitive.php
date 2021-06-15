@@ -31,7 +31,7 @@
         if (!isset($_SESSION['login_required']) || !$_SESSION['login_required']) {
 
             echo '
-                <div class="end-game active lose competitive">
+                <div class="end-game active competitive">
                     <div class="game-result-card competitive">
                         <p class="login_required_message">You need to be logged in to access this page!</p>
                         <a href="login_form/forms/signup"><button type="button" class="page_buttons">Create an account here!</button></a>

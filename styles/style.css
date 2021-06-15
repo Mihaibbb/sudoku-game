@@ -7,14 +7,19 @@
 
 body
 {
-    overflow-x: hidden;
+    
     padding: 0;
     margin: 0;
     min-height: 100vh;
     font-family: 'Source Sans Pro', sans-serif;
     max-width: 100%;
     max-height: 100%;  
-    overflow-x: hidden;
+    
+}
+
+body.dark 
+{
+    background: rgb(12,13,14);
 }
 
 a 
@@ -58,61 +63,17 @@ header nav p
     user-select: none;
 }
 
-header nav .switch 
+header nav .dark_mode
 {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin-top: .43rem;
-}
-
-header nav .switch input 
-{
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-header nav .switch .round 
-{
-    position: absolute;
+    margin-top: 3px;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 35px;
-    transition: all 350ms ease-in-out;
 }
 
-
-header nav .switch .round::before 
+header nav .dark_mode i
 {
-    position: absolute;
-    content: "";
-    height: 26px; 
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background: white;
-    border-radius: 100%;
-    transition: all 350ms ease-in-out;
-}
-
-
-header nav .switch input:checked + .round::before
-{
-    transform: translateX(100%);
+    color: white;
+    font-size: 24px;
     
-}
-
-
-header nav .switch input:checked + .round 
-{
-    background:rgb(36, 122, 228);
 }
 
 .difficulties {
@@ -155,7 +116,7 @@ header nav .switch input:checked + .round
 .end-game 
 {
     position: absolute;
-    background: rgba(0, 0, 0, .55);
+    background: rgba(0, 0, 0, .85);
     top: 0;
     bottom: 0;
     left: 0;
@@ -215,11 +176,6 @@ header nav .switch input:checked + .round
     font-size: 30px;
 }
 
-.game-result-card.competitive 
-{
-    width: 400px;
-    min-height: 250px;
-}
 
 .end-game.win .game-result-card .result
 {
@@ -332,9 +288,14 @@ header nav .switch input:checked + .round
 {
     font-size: 26px;
     text-align: center;
-    color: red;
+    color: crimson;
     font-family: 'Lato';
     transition: all 500ms ease-in-out;
+}
+
+.fail.reverse 
+{
+    margin-top: -6rem;
 }
 
 .game.inactive 
@@ -885,6 +846,7 @@ header nav .switch input:checked + .round
     transition: all 350ms ease-in-out;
 }
 
+
 .game-row:first-child .game-cell
 {
     border-top: 3px solid #344861;
@@ -978,7 +940,110 @@ header nav .switch input:checked + .round
     cursor: no-drop;
 }
 
-/* PHP classes */
+/* Darkmode classes */
+
+.game-cell.dark,
+.timer_text.dark,
+.number.dark span
+{
+    color: rgb(164,186,206);
+}
+
+.timer:not(.finalWave):not(.secondWave) h2 span.time.dark,
+.timer:not(.finalWave):not(.secondWave) .pause-time.dark,
+.game-cell.correctCell.dark 
+{
+    color: rgb(114,255,114);
+}
+
+.timer.secondWave h2 span.time.dark,
+.timer.secondWave .pause-time.dark
+{
+    color: rgb(255, 189, 46);
+}
+
+
+.chosen_cell.dark
+{
+    background: rgb(44,48,50);
+}
+
+.chosen_row_column_square.dark:not(.chosen_cell)
+{
+    background: rgb(34,55,79);
+}
+
+.failedCell.dark:not(.correctCell)
+{
+    color: rgb(250,82,84);
+}
+
+.failedCellBg.dark:not(.chosen_cell):not(.passedCell):not(.correctCell)
+{
+    background: rgb(73,12,23);
+}
+
+.passedCell.dark 
+{
+    color: rgb(87,162,228);
+}
+
+.game-row:first-child .game-cell.dark
+{
+    border-top: 3px solid rgb(73,102,137);
+
+}
+
+.game-row:first-child .game-cell.dark:first-child
+{
+    border-left: 3px solid rgb(73,102,137);
+}
+
+.game-row:first-child .game-cell.dark:last-child
+{
+    border-right: 3px solid rgb(73,102,137);
+}
+
+.game-row:nth-child(n) .game-cell.dark:first-child
+{
+    border-left: 3px solid rgb(73,102,137);
+}
+
+.game-row:nth-child(n) .game-cell.dark:last-child
+{
+    border-right: 3px solid rgb(73,102,137);
+}
+
+.game-row:last-child .game-cell.dark
+{
+    border-bottom: 3px solid rgb(73,102,137);
+}
+
+.game-row:nth-child(n) .game-cell.dark:nth-child(3n)
+{
+    border-right: 3px solid rgb(73,102,137);
+}
+
+.game-row:nth-child(3n) .game-cell.dark:nth-child(n)
+{
+    border-bottom: 3px solid rgb(73,102,137);
+}
+
+.command-title.dark
+{
+    color: rgb(172,192,210);
+    
+}
+
+.mode.dark:not(.active)
+{
+    color: rgb(232,230,227);
+}
+
+.new-game-selector.dark 
+{
+    background: rgb(15,17,17);
+}
 
 
 /* overlay on smaller screens */
@@ -1132,14 +1197,6 @@ header nav .switch input:checked + .round
     .board 
     {
         min-height: 600px;
-    }
-}
-
-@media only screen and (max-width: 600px) 
-{
-    .board 
-    {
-       
     }
 }
 
