@@ -127,25 +127,11 @@
             </div>
         </div>
 
-        <p class="login_request">
-            <?php 
-                if (!isset($_SESSION['signup_success']) && !isset($_SESSION['login_success'])) {
-                    echo 'Don\'t have an account? Sign Up <span class="sign-up-form">here!</span>';
-                    die();    
-                }
+        
+    </div>
 
-                if (!isset($_SESSION['login_success']) || !$_SESSION['login_success']) {
-                    echo 'Log in <span class="sign-up-form">here!</span>';    
-                }
+    <div class="fail reverse">
 
-                if (isset($_SESSION['login_success']) && !$_SESSION['login_success']) {
-                    echo '<p class="fail">Your email or password is incorrect!</p>';
-                    unset($_SESSION['login_success']);
-                }
-            ?>
-
-            
-        </p>
     </div>
     
 </body>
