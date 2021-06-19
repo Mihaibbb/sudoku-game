@@ -31,14 +31,25 @@
     color: rgb(138,138,138);
 }
 
+.search.dark .search-box
+{
+    background: rgb(15,17,17);
+}
+
 
 .search button 
 {
     transform: translateX(-2.5rem);
     cursor: pointer;
     border: none;
-    outline: none;
+    outline: none;  
 }
+
+.search.dark button 
+{
+    background: rgb(15,17,17);
+}
+
 
 .search .search-button i 
 {
@@ -65,10 +76,14 @@
 }
 
 
-.row.even 
+.row.even:not(.dark)
 {
     background: rgb(225, 230, 236);
-    
+}
+
+.row.dark li
+{
+    color: #fff;
 }
 
 

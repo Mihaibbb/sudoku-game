@@ -4,6 +4,9 @@ const gameElement = document.querySelector('.game');
 const board = document.querySelector('table.board');
 const timer = document.querySelector('.timer');
 const timerText = timer.querySelector('.timer_text');
+const mistakeContent = document.querySelector(".fail");
+const timeContent = timer.querySelector(".timer h2 span.time");
+
 
 if (screen.width > 1920) {
     const scaleX = screen.width / 1920;
@@ -12,17 +15,20 @@ if (screen.width > 1920) {
     gameElement.style.transform = 'scale(1.00001)';
 }
 
-const game = new ReverseSudoku(gameElement, board, timer);
+const game = new ReverseSudoku(gameElement, board, timer, mistakeContent);
 game.createBoard();
 
 
 const gameModeTitle = document.querySelector('.mode_title h1');
+const gameModes = document.querySelectorAll(".modes .mode");
 const classicMode = document.querySelector('.modes .mode.classic');
 const competitiveMode = document.querySelector('.modes .mode.competitive');
 const reverseMode = document.querySelector('.modes .mode.reverse');
 const newGame = document.querySelector('.new-game h1');
 
 // Compute titles
+
+const commandTitles = document.querySelectorAll(".command-title");
 const undoButton = document.querySelector('.undoContainer');
 const eraseButton = document.querySelector('.eraseContainer');
 const solveButton = document.querySelector('.solveContainer');
@@ -125,7 +131,7 @@ const boardPlayButton = document.querySelector('.play-button');
 const timerPauseButton = document.querySelector('.pause-time');
 
 timerPauseButton.addEventListener('click', () => {
-    
+    if (board.classList.contains("inAnimation")) return;
     timer.classList.toggle('paused');
     board.classList.toggle('paused');
 
@@ -294,3 +300,50 @@ const changeLangToRo = () => {
     undoTitle.innerText = 'Înapoi';
     eraseTitle.innerText = 'Ștergere';
 }
+
+// Dark mode 
+
+const darkModeButton = document.querySelector("nav .dark_mode");
+
+darkModeButton.addEventListener("click", () => {
+    const darkModeIcon = darkModeButton.querySelector("i");
+    if (darkModeIcon.classList.contains("fa-moon")) {
+        darkMode();   
+        localStorage.setItem("darkMode", JSON.stringify("on"));   
+    }
+    
+    if (darkModeIcon.classList.contains("fa-sun")) {
+        lightMode();
+        localStorage.setItem("darkMode", JSON.stringify("off"));   
+    }
+    
+});
+
+const darkMode = () => {
+    darkModeButton.innerHTML = "<i class='fas fa-sun'></i>";
+    document.body.classList.add("dark");
+    cells.forEach(cell => cell.classList.add("dark"));
+    timerText.classList.add("dark");
+    dataNumbers.forEach(dataNumber => dataNumber.classList.add("dark"));
+    timerPauseButton.classList.add("dark");
+    timeContent.classList.add("dark");
+    commandTitles.forEach(commandTitle => commandTitle.classList.add("dark"));
+    gameModes.forEach(mode => mode.classList.add("dark"));
+};
+
+const lightMode = () => {
+    darkModeButton.innerHTML = "<i class='fas fa-moon'></i>";
+    document.body.classList.remove("dark");
+    cells.forEach(cell => cell.classList.remove("dark"));
+    timerText.classList.remove("dark");
+    dataNumbers.forEach(dataNumber => dataNumber.classList.remove("dark"));
+    timerPauseButton.classList.remove("dark");
+    timeContent.classList.remove("dark");
+    commandTitles.forEach(commandTitle => commandTitle.classList.remove("dark"));
+    gameModes.forEach(mode => mode.classList.remove("dark"));
+};
+
+ // Dark mode local storage
+
+ if (JSON.parse(localStorage.getItem("darkMode")) === "on") darkMode();
+ else if (JSON.parse(localStorage.getItem("darkMode")) === "off") lightMode();

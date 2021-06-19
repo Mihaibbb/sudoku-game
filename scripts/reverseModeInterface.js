@@ -1,10 +1,11 @@
 export default class ReverseSudoku {
 
-    constructor(game, board, timer) {
+    constructor(game, board, timer, mistakeContent) {
         this.game = game;
         this.board = board;
         this.timer = timer;
         this.realTimeBoard = this.fillBoard([]);
+        this.mistakeContent = mistakeContent;
     }
 
     // Function that returns the board move, even if it's a good move or a bad move
@@ -319,8 +320,21 @@ export default class ReverseSudoku {
         if (this.board.classList.contains('paused')) return;
         const currBoard = this.boardWithCurrentMove();
         console.log((currBoard));
-        if (!this.possibleBoard(currBoard)) return;
-        
+
+        const boardFailElement = this.mistakeContent.querySelector("p");
+
+        if (!this.possibleBoard(currBoard)) {
+            if (boardFailElement !== null) return;
+            const boardFail = document.createElement("p");
+            boardFail.innerText = "Current board is not a valid one!";
+            this.mistakeContent.appendChild(boardFail);
+            return;
+        }
+
+        if (boardFailElement !== null) {
+            boardFailElement.remove();
+        }
+
         console.log('solved');
         solveBoard(this.realTimeBoard);
         
