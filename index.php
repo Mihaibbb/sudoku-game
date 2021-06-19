@@ -61,7 +61,7 @@
                 }
 
                 if (isset($_SESSION['login_success_message']) && $_SESSION['login_success_message'] && isset($_SESSION['username'])) {
-                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "</span>";
+                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "</span>!";
                     $_SESSION['login_success_message'] = false;
                 }
             ?>

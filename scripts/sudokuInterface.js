@@ -1,6 +1,6 @@
 export default class Sudoku {
 
-    constructor(game, sudokuBoard, board, score, hintCounter, gameMode) {
+    constructor(game, sudokuBoard, board, score, hintCounter, gameMode, difficulty, mistakesCounter) {
         
         this.game = game;
         this.board = board;
@@ -8,7 +8,9 @@ export default class Sudoku {
         this.score = score;
         this.hintCounter = hintCounter;
         this.gameMode = gameMode.toLowerCase();
+        this.difficulty = difficulty.toLowerCase();
         this.sudokuInitBoard = sudokuBoard;
+        this.mistakesCounter = mistakesCounter;
         
         saveInitBoard(this.sudokuInitBoard, this.gameMode);
         this.sudokuBoard = sudokuBoard;
@@ -348,7 +350,9 @@ export default class Sudoku {
                 if (this.mistakeBoard[this.cellX][this.cellY] !== number) {
                     this.mistakeBoard[this.cellX][this.cellY] = number;
                     this.score.innerText = parseInt(this.score.innerText) - 3 < 0 ? "0" : parseInt(this.score.innerText) - 3;   
+                    this.mistakesCounter++;
                     
+                    localStorage.setItem(this.gameMode + "-mistakes", JSON.stringify(this.mistakesCounter));
                     localStorage.setItem(this.gameMode + "-score", JSON.stringify(this.score.innerText));
                     if (parseInt(this.score.innerText) == 0) {
                         this.gameRunning = false;
@@ -490,6 +494,7 @@ export default class Sudoku {
         // for every mistake 3 points are taken away
 
         if (mistakes > 0) return false;
+        
         
         // Changing the value of board with the chosen coords 
         this.realTimeBoard[row][column] = number;
@@ -657,9 +662,12 @@ export default class Sudoku {
 
         const scoreSubmit = document.querySelector(".score_submit");
         const timeSubmit = document.querySelector(".time_submit");
+        const difficultySubmit = document.querySelector(".difficulty_submit");
+        const mistakesSubmit = document.querySelector(".mistakes_counter");
         scoreSubmit.value = this.score.innerText;
         timeSubmit.value = (timeHours.innerText === "" ? "" : timeHours.innerText + ":") + timeMinutes.innerText + ":" + timeSeconds.innerText;
-
+        difficultySubmit.value = this.difficulty;
+        mistakesSubmit.value = this.mistakesCounter;
         // Cause of lose
     }
 
@@ -728,20 +736,4 @@ function saveInitBoard(board, mode) {
     if (localStorage.getItem(mode + "-init-board") !== null) return;
     localStorage.setItem(mode + "-init-board", JSON.stringify(board));
     
-}
-
-function saveSelectedCell() {
-
-}
-
-function saveHints() {
-
-}
-
-function saveTime() {
-
-}
-
-function saveScore() {
-
 }

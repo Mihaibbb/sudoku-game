@@ -10,7 +10,8 @@ let sudokuBoard = [];
     const gameMode = document.querySelector('.game-mode').innerText.toLowerCase();
     const table = document.querySelector(".board");
     const difficulty = document.querySelector(".difficulties h1");
-
+    const mistakesCounter = localStorage.getItem(gameMode + "-mistakes") !== null ? JSON.parse(localStorage.getItem(gameMode + "-mistakes")) : 0;
+    console.log(localStorage.getItem(gameMode + "-mistakes") !== null);
     if (localStorage.getItem(gameMode + "-difficulty") !== null) {
         difficulty.innerText = JSON.parse(localStorage.getItem(gameMode + "-difficulty"));
         difficulty.classList.remove("easy");
@@ -97,7 +98,7 @@ let sudokuBoard = [];
     const timerText = timer.querySelector('.timer_text');
     const timeContent = timer.querySelector(".timer h2 span.time");
 
-    const game = new Sudoku(gameElement, newSudokuBoard, board, score, hintsCount, gameMode);
+    const game = new Sudoku(gameElement, newSudokuBoard, board, score, hintsCount, gameMode, difficulty.innerText, mistakesCounter);
 
     // Showing the initial board
     
@@ -747,6 +748,7 @@ let sudokuBoard = [];
         localStorage.removeItem(gameMode + "-score");
         localStorage.removeItem(gameMode + "-end-game");
         localStorage.removeItem(gameMode + "-hints");
+        localStorage.removeItem(gameMode + "-mistakes");
 
         if (localStorage.getItem(gameMode + "-hint-coords-1") !== null) {
             localStorage.removeItem(gameMode + "-hint-coords-1");
@@ -777,6 +779,7 @@ let sudokuBoard = [];
         localStorage.removeItem(gameMode + "-score");
         localStorage.removeItem(gameMode + "-end-game");
         localStorage.removeItem(gameMode + "-hints");
+        localStorage.removeItem(gameMode + "-mistakes");
 
         if (localStorage.getItem(gameMode + "-hint-coords-1") !== null) {
             localStorage.removeItem(gameMode + "-hint-coords-1");
