@@ -48,13 +48,15 @@
 
     <div class="end-game"> 
         <div class="game-result-card">
-            <h2 class="result">You've</h2>
-            <p class="final-score">Score: <i class="fas fa-bolt"></i></p>
-            <p class="final-time">Time: <i class="fas fa-clock"></i></p>
+            <h2 class="result"></h2>
+            <p class="final-score"></p>
+            <p class="final-time"></p>
             
             <form action="./update_score/includes/update_score.inc.php" method="post" class="check_score">
                 <input type="hidden" name="score" class="score_submit">
                 <input type="hidden" name="time" class="time_submit">
+                <input type="hidden" name="difficulty" class="difficulty_submit">
+                <input type="hidden" name="mistakes" class="mistakes_counter">
                 <button class="new-game-btn">New game</button>
             </form>
             
@@ -106,7 +108,7 @@
             <div class="game-overlay">
                 
                 <div class="timer desktop">
-                    <h2>Timer: <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                    <h2><span class="timer_text">Timer:</span><span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
                     <div class="pause-time"></div>
                 </div>
                 

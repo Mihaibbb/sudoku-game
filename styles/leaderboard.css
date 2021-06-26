@@ -1,3 +1,24 @@
+/* Scroll Bar */
+
+::-webkit-scrollbar 
+{
+    width: 20px;
+}
+
+::-webkit-scrollbar-track 
+{
+    
+    
+    background: rgba(0, 0, 0, .2);
+}
+
+::-webkit-scrollbar-thumb 
+{
+    background: rgba(255, 255, 255, .6);
+    border-radius: 8px;
+}
+
+
 .leaderboard_title
 {
     text-align: center;
@@ -76,10 +97,7 @@
 }
 
 
-.row.even:not(.dark)
-{
-    background: rgb(225, 230, 236);
-}
+
 
 .row.dark li
 {
@@ -105,7 +123,7 @@
 {
     list-style: none;
     font-size: 26px;
-    font-weight: 600;
+    
     letter-spacing: .8px;
     -webkit-user-select: none;
     user-select: none;
@@ -115,16 +133,18 @@
 
 .row li 
 {
-    font-family: "Open Sans";
+    font-family: "Lato";
     color: rgb(29, 27, 27);
     
 }
 
-.row .score-item 
+.row .score-item,
+.row.dark .score-item
 {
     color:rgb(77, 144, 226);
     font-size: 28px;
 }
+
 
 .row .score-item i 
 {

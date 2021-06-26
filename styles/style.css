@@ -66,6 +66,7 @@ header nav p
 header nav .dark_mode
 {
     margin-top: 3px;
+    margin-left: 15px;
     cursor: pointer;
 }
 

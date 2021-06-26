@@ -159,6 +159,8 @@ export default class ReverseSudoku {
                 highlightedCell.classList.remove('failedCell');
                 highlightedCell.classList.remove('failedCellBg');
             });
+
+            this.realTimeBoard[this.cellX][this.cellY] = 0;
         } 
         
         displayedCell.innerText = number;

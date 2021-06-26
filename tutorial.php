@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +12,8 @@
     <?php require_once "./sections/fonts.php"; ?>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/tutorial.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer></script>
+    <script src="./scripts/tutorial.js" defer></script>
 </head>
 <body>
     <?php require_once "./sections/header.php"; ?>
@@ -116,8 +122,9 @@
                    
                 </div>
 
-                <div class="image">
-                   
+                <div class="charts">
+                   <canvas id="mistake_chart"></canvas>
+                   <canvas id="time_chart"></canvas>
                 </div>
             </div>
 
