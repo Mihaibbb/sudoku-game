@@ -34,7 +34,7 @@
         <li>Position</li>
         <li>Name</li>
         <li>Username</li>
-        <li>Email</li>
+       
         <li>Score</li>
     </div>
 
@@ -48,6 +48,9 @@
             $result = $conn->query($sql);
             $position = 1;
             while ($row = $result->fetch_assoc()) {
+                echo "<a href='./account?id=". $row["id"] ."'>";
+
+
                 if ($position % 2 !== 0) {
                     echo "<div class='row even'>";
                 } else {
@@ -57,10 +60,11 @@
                         <li class='position-item'>" . $position ."</li>
                         <li>" . $row["name"] . "</li>
                         <li>" . $row["username"] . "</li>
-                        <li>" . $row["email"] . "</li>
                         <li class='score-item'><i class='fas fa-bolt'></i>" . $row["score"] . "</li>   
                     </div>
+                </a>
                     <hr>
+                
                 ";
 
                 $position++;

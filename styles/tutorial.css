@@ -73,10 +73,17 @@
     justify-content: center;
 }
 
-.item-content .image 
+.item-content .image
 {
     align-self: flex-start;
 
+}
+
+.item-content .charts canvas
+{
+    width: 750px;
+    height: 350px;
+    margin: 6rem auto 0;
 }
 
 .image video 

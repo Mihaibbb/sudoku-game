@@ -4,38 +4,47 @@ const rows = document.querySelector(".rows");
 const searchInput = document.querySelector(".search-box");
 const searchElement = document.querySelector(".search");
 
-searchInput.addEventListener("keydown", e => {
-    dbRowsElement.classList.add("hide");
-    checkMatchRow(searchInput.value)
+searchInput.addEventListener("keyup", e => {
+    
+    const results = getCurrentResults(e.target.value);
+    showResults(results);
+    
 });
 
-const checkMatchRow = string => {
-    console.log(string)
-    dbRows.forEach(dbRow => {
-        let match = false;
-        const rowElements = dbRow.querySelectorAll("li");
-        rowElements.forEach(rowElement => {
-            if (rowElement.innerText.includes(string)) match = true;
-            console.log(match)
-        });
+const getCurrentResults = (word) => {
+    word = word.toLowerCase();
+    
+    return [...dbRows].filter(row => {
+        const rowItems = row.querySelectorAll("li");
+        const positionRow = rowItems[0].innerText.toLowerCase();
+        const nameRow = rowItems[1].innerText.toLowerCase();
+        const usernameRow = rowItems[2].innerText.toLowerCase();
+        const scoreRow = rowItems[3].innerText.toLowerCase();
 
-        if (match) {
-            const cloneChild = dbRow.cloneNode(true);
-            rows.appendChild(cloneChild);
-        } else {
-            const rowElement = document.querySelectorAll('.row');
-            if (rowElement === undefined) return;
-
-            rowElement.forEach(row => {
-                if (row === dbRow) {
-                    row.remove();
-                };
-            });
-
-            
-        }
+        return positionRow.includes(word) || nameRow.includes(word) || usernameRow.includes(word) || scoreRow.includes(word);
     });
 };
+
+const showResults = (currResults) => {
+    const htmlResults = currResults.map(currResult => {
+        const rowItems = currResult.querySelectorAll("li");
+        const positionRow = rowItems[0].innerText;
+        const nameRow = rowItems[1].innerText;
+        const usernameRow = rowItems[2].innerText;
+        const scoreRow = rowItems[3].innerText;
+        let darkMode = JSON.parse(localStorage.getItem("darkMode"));
+        return `<div class='row ${darkMode === "on" ? "dark" : ""}'>
+                    <li class='position-item'>${positionRow}</li>
+                    <li>${nameRow}</li>
+                    <li>${usernameRow}</li>
+                    <li class='score-item'><i class='fas fa-bolt'></i>${scoreRow}</li>   
+                </div>
+                <hr>`;
+    }).join('');
+
+    dbRowsElement.innerHTML = htmlResults;
+};
+
 
 // Dark mode 
 
