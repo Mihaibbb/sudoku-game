@@ -17,7 +17,8 @@
     <script src="scripts/script.js" type="module"></script>
     <script src="./login_form/scripts/form-validation.js" defer></script>
     <script src="./login_form/scripts/form-validation-login.js" defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+    
     <?php 
         require_once 'sections/fonts.php';
     ?>
@@ -60,7 +61,7 @@
                 }
 
                 if (isset($_SESSION['login_success_message']) && $_SESSION['login_success_message'] && isset($_SESSION['username'])) {
-                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "</span>";
+                    echo "<span class='login-message'>Welcome, " . $_SESSION['username'] . "</span>!";
                     $_SESSION['login_success_message'] = false;
                 }
             ?>

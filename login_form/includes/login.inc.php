@@ -22,7 +22,7 @@ while ($row = $result->fetch_assoc()) {
         $_SESSION['login_success_message'] = true;
         $_SESSION['login_required'] = true;
          
-        header("Location: ../../");
+        header("Location: ../../account");
         die();
     }
 }

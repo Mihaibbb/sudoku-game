@@ -1,6 +1,15 @@
 <header>
 
     <nav>
+
+    <p><img class="language" src="../../img/ro.png" alt="ro_img"></p>
+
+    <?php 
+        if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
+            echo "<a href='account'><p class='account_item'>Account</p></a> ";
+        }
+    ?>
+
         <?php 
              if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
                 echo "<a href='account'><p class='account_item'>Account</p></a> ";
@@ -19,6 +28,12 @@
                 ";
             }
         ?>
+
+        
+        <div class="dark_mode">
+            <i class="fas fa-moon"></i>
+        </div>
+   
             
     </nav>
     

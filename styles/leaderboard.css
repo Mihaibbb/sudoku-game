@@ -1,3 +1,24 @@
+/* Scroll Bar */
+
+::-webkit-scrollbar 
+{
+    width: 20px;
+}
+
+::-webkit-scrollbar-track 
+{
+    
+    
+    background: rgba(0, 0, 0, .2);
+}
+
+::-webkit-scrollbar-thumb 
+{
+    background: rgba(255, 255, 255, .6);
+    border-radius: 8px;
+}
+
+
 .leaderboard_title
 {
     text-align: center;
@@ -31,14 +52,25 @@
     color: rgb(138,138,138);
 }
 
+.search.dark .search-box
+{
+    background: rgb(15,17,17);
+}
+
 
 .search button 
 {
     transform: translateX(-2.5rem);
     cursor: pointer;
     border: none;
-    outline: none;
+    outline: none;  
 }
+
+.search.dark button 
+{
+    background: rgb(15,17,17);
+}
+
 
 .search .search-button i 
 {
@@ -65,10 +97,11 @@
 }
 
 
-.row.even 
+
+
+.row.dark li
 {
-    background: rgb(225, 230, 236);
-    
+    color: #fff;
 }
 
 
@@ -90,7 +123,7 @@
 {
     list-style: none;
     font-size: 26px;
-    font-weight: 600;
+    
     letter-spacing: .8px;
     -webkit-user-select: none;
     user-select: none;
@@ -100,16 +133,18 @@
 
 .row li 
 {
-    font-family: "Open Sans";
+    font-family: "Lato";
     color: rgb(29, 27, 27);
     
 }
 
-.row .score-item 
+.row .score-item,
+.row.dark .score-item
 {
     color:rgb(77, 144, 226);
     font-size: 28px;
 }
+
 
 .row .score-item i 
 {

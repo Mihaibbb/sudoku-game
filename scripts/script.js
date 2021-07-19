@@ -10,6 +10,8 @@ let sudokuBoard = [];
     const gameMode = document.querySelector('.game-mode').innerText.toLowerCase();
     const table = document.querySelector(".board");
     const difficulty = document.querySelector(".difficulties h1");
+    const mistakesCounter = localStorage.getItem(gameMode + "-mistakes") !== null ? JSON.parse(localStorage.getItem(gameMode + "-mistakes")) : 0;
+ 
 
     if (localStorage.getItem(gameMode + "-difficulty") !== null) {
         difficulty.innerText = JSON.parse(localStorage.getItem(gameMode + "-difficulty"));
@@ -20,6 +22,32 @@ let sudokuBoard = [];
         if (difficulty.classList.contains("medium") && window.innerWidth > 1250) {
             table.style.marginLeft = "-50px";
         }
+    }
+
+    
+    // Score local storage
+   
+    let defaultScore;
+    let difficultyTextContent = difficulty.innerText.toLowerCase();
+
+
+    const board = document.querySelector('.board');
+    const score = document.querySelector('.score');
+        
+    if (difficultyTextContent === "medium") score.innerText = '125';
+    if (difficultyTextContent === "hard") score.innerText = '150';
+
+    if (difficultyTextContent === "easy") defaultScore = "100";
+    else if (difficultyTextContent === "medium") defaultScore = "125";
+    else if (difficultyTextContent === "hard") defaultScore = "150";
+
+    if (localStorage.getItem(gameMode + "-score") === null) localStorage.setItem(gameMode + "-score", JSON.stringify(defaultScore));
+
+    
+    if (localStorage.getItem(gameMode + "-score") !== null) {
+        console.log(score.innerText);
+        score.innerText = JSON.parse(localStorage.getItem(gameMode + "-score"));
+        console.log(score);
     }
 
     let newSudokuBoard;
@@ -65,13 +93,8 @@ let sudokuBoard = [];
         
     });
 
-    
-    const board = document.querySelector('.board');
-    const score = document.querySelector('.score');
 
-    if (localStorage.getItem(gameMode + "-score") !== null) {
-        score.innerText = JSON.parse(localStorage.getItem(gameMode + "-score"));
-    }
+
 
     const timer = document.querySelector('.timer.desktop');
     const hintsCount = document.querySelector('.hint-counter');
@@ -82,6 +105,7 @@ let sudokuBoard = [];
     }
     
     const gameModeTitle = document.querySelector('.mode_title h1');
+    const gameModes = document.querySelectorAll(".modes .mode");
     const classicMode = document.querySelector('.modes .mode.classic');
     const competitiveMode = document.querySelector('.modes .mode.competitive');
     const reverseMode = document.querySelector('.modes .mode.reverse');
@@ -94,8 +118,9 @@ let sudokuBoard = [];
     const timeMinutes = timer.querySelector('.minutes');
     const timeHours = timer.querySelector('.hours');
     const timerText = timer.querySelector('.timer_text');
+    const timeContent = timer.querySelector(".timer h2 span.time");
 
-    const game = new Sudoku(gameElement, newSudokuBoard, board, score, hintsCount, gameMode);
+    const game = new Sudoku(gameElement, newSudokuBoard, board, score, hintsCount, gameMode, difficulty.innerText, mistakesCounter);
 
     // Showing the initial board
     
@@ -118,6 +143,7 @@ let sudokuBoard = [];
   
 
     // Compute titles
+    const commandTitles = document.querySelectorAll(".command-title");
 
     const scoreTitle = scoreButton.querySelector('.command-title');
     const hintTitle = hintButton.querySelector('.command-title');
@@ -355,8 +381,6 @@ let sudokuBoard = [];
     }
 
     const counter = () => {
-
-       
 
         if (timer.classList.contains('paused')) return;
 
@@ -630,6 +654,55 @@ let sudokuBoard = [];
         if (difficulty.innerText === "Hard") difficulty.innerText = "Greu";
     }
 
+    // Dark mode 
+
+    const darkModeButton = document.querySelector("nav .dark_mode");
+
+    darkModeButton.addEventListener("click", () => {
+
+        const darkModeIcon = darkModeButton.querySelector("i");
+        if (darkModeIcon.classList.contains("fa-moon")) {
+            darkMode();      
+            localStorage.setItem("darkMode", JSON.stringify("on"));     
+        }
+
+        if (darkModeIcon.classList.contains("fa-sun")) {
+            lightMode();    
+            localStorage.setItem("darkMode", JSON.stringify("off"));
+        }
+    });
+
+    const darkMode = () => {
+        darkModeButton.innerHTML = "<i class='fas fa-sun'></i>";
+        document.body.classList.add("dark");
+        cells.forEach(cell => cell.classList.add("dark"));
+        timerText.classList.add("dark");
+        dataNumbers.forEach(dataNumber => dataNumber.classList.add("dark"));
+        timerPauseButton.classList.add("dark");
+        timeContent.classList.add("dark");
+        commandTitles.forEach(commandTitle => commandTitle.classList.add("dark"));
+        gameModes.forEach(mode => mode.classList.add("dark"));
+        newGameSelector.classList.add("dark");
+    };
+
+    const lightMode = () => {
+        darkModeButton.innerHTML = "<i class='fas fa-moon'></i>";
+        document.body.classList.remove("dark");
+        cells.forEach(cell => cell.classList.remove("dark"));
+        timerText.classList.remove("dark");
+        dataNumbers.forEach(dataNumber => dataNumber.classList.remove("dark"));
+        timerPauseButton.classList.remove("dark");
+        timeContent.classList.remove("dark");
+        commandTitles.forEach(commandTitle => commandTitle.classList.remove("dark"));
+        gameModes.forEach(mode => mode.classList.remove("dark"));
+        newGameSelector.classList.remove("dark");
+    };
+
+    // Dark mode local storage
+
+    if (JSON.parse(localStorage.getItem("darkMode")) === "on") darkMode();
+    else if (JSON.parse(localStorage.getItem("darkMode")) === "off") lightMode();
+
     async function checkEndGame() {
 
         if (localStorage.getItem(gameMode + "-end-game") === null) return;
@@ -697,6 +770,7 @@ let sudokuBoard = [];
         localStorage.removeItem(gameMode + "-score");
         localStorage.removeItem(gameMode + "-end-game");
         localStorage.removeItem(gameMode + "-hints");
+        localStorage.removeItem(gameMode + "-mistakes");
 
         if (localStorage.getItem(gameMode + "-hint-coords-1") !== null) {
             localStorage.removeItem(gameMode + "-hint-coords-1");
@@ -727,6 +801,7 @@ let sudokuBoard = [];
         localStorage.removeItem(gameMode + "-score");
         localStorage.removeItem(gameMode + "-end-game");
         localStorage.removeItem(gameMode + "-hints");
+        localStorage.removeItem(gameMode + "-mistakes");
 
         if (localStorage.getItem(gameMode + "-hint-coords-1") !== null) {
             localStorage.removeItem(gameMode + "-hint-coords-1");
