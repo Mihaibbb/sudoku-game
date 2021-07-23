@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+
 *,
 *::before,
 *::after
@@ -14,7 +16,7 @@ body
     font-family: 'Source Sans Pro', sans-serif;
     max-width: 100%;
     max-height: 100%;  
-    
+    overflow-x: hidden;
 }
 
 body.dark 
@@ -22,10 +24,15 @@ body.dark
     background: rgb(12,13,14);
 }
 
-a 
+a
 {
     text-decoration: none;
     color: initial;
+}
+
+li
+{
+    list-style-type: none;
 }
 
 /* Header */
@@ -34,48 +41,140 @@ header
 {
     width: 100%;
     height: 70px;
-    background:rgb(52, 72, 97);
-    box-shadow: 15px 10px 30px rgb(1, 87, 155);
+    background:#0082e6;
+    box-shadow: 15px 10px 30px #0082e6;
     position: relative;
     z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
 }
 
 header nav 
 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: inherit;
-    transform: translateX(-3rem) translateY(-3px);
+ 
+    transform: translateY(0px);
+}
+
+header nav li.dark_mode,
+header nav li.img
+{
     float: right;
-    
+    transform: translateY(30px);
+    margin-right: 20px;
 }
 
-header nav p
+header nav .img img 
 {
-    margin: 0 1.5rem;
-    color: rgb(191, 225, 238);
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    
-    -webkit-user-select: none;
-    user-select: none;
+    transform: translateY(4px);
 }
 
-header nav .dark_mode
+header nav .dark_mode i 
 {
-    margin-top: 3px;
-    margin-left: 15px;
-    cursor: pointer;
-}
-
-header nav .dark_mode i
-{
-    color: white;
+    color: #fff;
     font-size: 24px;
+    transform: translateY(1.5px);
+
+}
+
+nav{
+    background: #0082e6;
+    height: 80px;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+}
+
+  
+nav ul {
+    float: right;
+    margin-right: 20px;
+   
+}
+
+nav li 
+{
+    cursor: pointer;
+}
+
+nav ul li {
+    display: inline-block;
+    line-height: 55px;
+    margin: 0 5px;
     
 }
+
+nav ul li a{
+    color: white;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    font-weight: 500;
+    
+}
+
+  
+.checkbtn{
+    font-size: 30px;
+    color: white;
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+
+#check{
+    display: none;
+}
+
+@media (max-width: 952px) {
+ 
+    nav ul li a{
+      font-size: 16px;
+    }
+}
+
+@media (max-width: 858px) {
+
+    .checkbtn {
+      display: block;
+    }
+
+    ul {
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      height: auto;
+      background: rgb(52,72,97);
+      top: 60px;
+      left: -100%;
+      text-align: center;
+      height: 100vh;
+      transition: all .5s;
+      
+    }
+
+    nav ul li {
+      display: block;
+      margin: 35px 0;
+      line-height: 30px;
+    }
+    nav ul li a {
+      font-size: 24px;
+      font-weight: 500;
+    }
+    a:hover,a.active {
+      background: none;
+      
+    }
+    #check:checked ~ ul {
+      left: 0;
+      
+    }
+
+  }
+
 
 .difficulties {
     align-self: flex-start;
@@ -136,6 +235,11 @@ header nav .dark_mode i
     
 }
 
+.end-game.login 
+{
+    top: 70px;
+}
+
 .end-game.active 
 {
     z-index: 100;
@@ -153,6 +257,11 @@ header nav .dark_mode i
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.end-game.login .game-result-card
+{
+    min-height: 250px;
 }
 
 .end-game.win .game-result-card
@@ -234,10 +343,6 @@ header nav .dark_mode i
     transition: all 350ms ease-in-out;
 }
 
-.end-game:not(.competitive) .game-result-card button:hover {
-    background: rgb(0, 114, 227);
-    color: rgba(255, 255, 255, .9);
-}
 
 .end-game:not(.competitive) .game-result-card button i {
     transform: rotateY(180deg);
@@ -418,21 +523,6 @@ header nav .dark_mode i
     color: #fff;
 }
 
-.mode:not(.active):hover,
-.difficulty:not(.active):hover
-{
-    background: rgb(77, 144, 226);
-    border: 3px solid rgb(77, 144, 226);
-    box-shadow: 0 4px 0 rgb(77, 144, 226);
-    color: #fff;
-} 
-
-.mode:not(.active):hover a 
-{
-    color: #fff;
-}
-
-
 
 /* New game */
 
@@ -454,25 +544,53 @@ header nav .dark_mode i
     transition: all 350ms ease-in-out;
 }
 
+.board_corners
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(4rem);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+}
+
 .new-game.mobile 
 {
-    margin: 0 auto;
+    margin: 0 1.5rem 0 0;
+    border: none;
+    box-shadow: none;
+
+    justify-content: flex-end;
+    transform: translateY(0);
+}
+
+.new-game.mobile h1 
+{
+    font-size: 1.5rem;
+}
+
+
+.timer.mobile 
+{
+    margin: 0 0 0 1rem;
+    justify-self: flex-start;
+}
+
+.timer.mobile h2 
+{
+    font-size: 1.5rem;
+}
+
+.timer.mobile .pause-time 
+{
+    font-size: 1.75rem;
+    transform: translateX(-.35rem);
 }
 
 .new-game h1
 {
     color: rgb(77, 144, 226);
-}
-
-.new-game:hover {
-    background: rgb(77, 144, 226);
-    border: rgb(77, 144, 226);
-    box-shadow: 0 6px 0 rgb(77, 144, 226);
-}
-
-.new-game:hover h1
-{
-    color: #fff;
 }
 
 .new-game-selector 
@@ -482,7 +600,6 @@ header nav .dark_mode i
     padding: 0;
     padding-bottom: 1.5rem;
     width: 100%;
-    max-width: 310px;
     height: auto;
     min-height: 100px;
     border-radius: 8px;
@@ -491,9 +608,25 @@ header nav .dark_mode i
     z-index: 300;
     background: white;
     transform: scaleY(0);
+    
     transform-origin: top;
     transition: all 350ms ease-in-out;
 
+}
+
+.new-game-selector.desktop 
+{
+    max-width: 310px;
+    
+}
+
+.new-game-selector.mobile 
+{
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    transform: translateY(50px);
+    display: none;
 }
 
 .new-game-selector h1
@@ -514,6 +647,13 @@ header nav .dark_mode i
 .show_selector 
 {
     transform: scaleY(1);
+    
+}
+
+.new-game-selector.mobile.show_selector 
+{
+    display: block;
+    
 }
 
 
@@ -541,12 +681,6 @@ header nav .dark_mode i
     cursor: pointer;
     
     transition: all 350ms ease-in-out;
-}
-
-.new-game-selector .restart button:hover 
-{
-    background: rgb(0, 114, 227);
-    color: #fff;
 }
 
 .new-game-selector .restart button i
@@ -603,22 +737,10 @@ header nav .dark_mode i
     color:rgb(52, 72, 97);
 }
 
-.numbers-grid .number:hover
-{
-    background: rgb(77, 144, 226);
-    
-}
-.numbers-grid .number:hover > span
-{
-    color: #fff;
-}
-
 /* Game commands */
 
 .game-control
 {
-    max-width: 300px;
-    min-width: 300px;
     display: grid;
     grid-template-columns: auto auto;
     
@@ -718,32 +840,6 @@ header nav .dark_mode i
     
 }
 
-.command:hover .player_score,
-.command:hover .hint,
-.command:hover .undo,
-.command:hover .erase,
-.command:hover .solver,
-.command:hover .command-title
-{
-    color: white;
-}
-
-.command:hover .hint-counter
-{
-    color: rgb(52, 72, 97);
-    background: #fff;
-}
-
-.command:hover
-{
-    background:rgb(77, 144, 226);
-}
-
-.command:hover .player_score i 
-{
-    transform: rotateZ(5deg);
-}
-
 .board
 {
     width: 100%;
@@ -768,7 +864,7 @@ header nav .dark_mode i
     cursor: pointer;
     pointer-events: all;
     color: rgb(77, 144, 226);
-    font-size: 45px;
+    font-size: 100%;
     opacity: 0;
     display: none;
     transition: all 350ms ease-in-out;
@@ -839,12 +935,26 @@ header nav .dark_mode i
     cursor: pointer;
     text-align: center;
     font-size: 32px;
+    position: relative;
     font-weight: 700;
     color: rgb(52, 72, 97);
     
     -webkit-user-select: none;
     user-select: none;
     transition: all 350ms ease-in-out;
+}
+
+.question-mark
+{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: red;
+    font-size: 14px;
+    opacity: 1;
+    display: block;
+    transition: all 350ms ease-in-out;
+    
 }
 
 
@@ -1052,13 +1162,108 @@ header nav .dark_mode i
 
 
 @media only screen and (min-width: 1241px) {
-    .mobile {
+
+
+    .board_corners {
         display: none;
     }
 
     .game_modes:not(.reverse)
     {
         transform: translateX(3rem);
+    }
+
+    .game-control 
+    {
+        max-width: 300px;
+        min-width: 300px;
+    }
+
+    .play-button
+    {
+        font-size: 45px;
+    }
+    
+    nav a.active, nav a:hover{
+        background: #1b9bff;
+        transition: .5s;
+    }
+
+    .end-game:not(.competitive) .game-result-card button:hover {
+        background: rgb(0, 114, 227);
+        color: rgba(255, 255, 255, .9);
+    }
+
+    
+    .mode:not(.active):hover,
+    .difficulty:not(.active):hover
+    {
+        background: rgb(77, 144, 226);
+        border: 3px solid rgb(77, 144, 226);
+        box-shadow: 0 4px 0 rgb(77, 144, 226);
+        color: #fff;
+    } 
+
+    .mode:not(.active):hover a 
+    {
+        color: #fff;
+    }
+
+    
+    .new-game:not(.mobile):hover {
+        background: rgb(77, 144, 226);
+        border: rgb(77, 144, 226);
+        box-shadow: 0 6px 0 rgb(77, 144, 226);
+    }
+
+    .new-game:not(.mobile):hover h1
+    {
+        color: #fff;
+    }
+
+    
+    .new-game-selector .restart button:hover 
+    {
+        background: rgb(0, 114, 227);
+        color: #fff;
+    }
+
+    
+    .numbers-grid .number:hover
+    {
+        background: rgb(77, 144, 226);
+        
+    }
+    .numbers-grid .number:hover > span
+    {
+        color: #fff;
+    }
+
+        
+    .command:hover .player_score,
+    .command:hover .hint,
+    .command:hover .undo,
+    .command:hover .erase,
+    .command:hover .solver,
+    .command:hover .command-title
+    {
+        color: white;
+    }
+
+    .command:hover .hint-counter
+    {
+        color: rgb(52, 72, 97);
+        background: #fff;
+    }
+
+    .command:hover
+    {
+        background:rgb(77, 144, 226);
+    }
+
+    .command:hover .player_score i 
+    {
+        transform: rotateZ(5deg);
     }
 }
 
@@ -1115,8 +1320,8 @@ header nav .dark_mode i
 
     .game-control 
     {
-        grid-template-columns: repeat(4, auto);
-        grid-column-gap: 2rem;
+        display: flex;
+        
         
         
         justify-content: center;
@@ -1149,10 +1354,9 @@ header nav .dark_mode i
 
     .game_modes
     {
-        
         width: 100%;
         height: 100%;
-        margin: -1rem auto;
+        margin: 1rem auto -1rem;
         
     }
 
@@ -1166,6 +1370,8 @@ header nav .dark_mode i
         
         
     }
+
+    
 }
 
 /* Login request */
@@ -1181,6 +1387,27 @@ header nav .dark_mode i
     color:rgb(1, 87, 155);
     cursor: pointer;
 }
+
+/* Responsive header */
+
+@media only screen and (min-width: 1051px)
+{
+    header nav p.header-bar 
+    {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1050px)
+{
+    header nav p.item 
+    {
+        display: none;
+    }
+}
+
+
+
 
 @media only screen and (max-width: 650px)
 {
@@ -1201,12 +1428,23 @@ header nav .dark_mode i
     }
 }
 
+@media only screen and (max-width: 600px)
+{
+    
+    .difficulties h1 
+    {
+        font-size: 1.75rem;
+    }
+
+}
+
 @media only screen and (max-width: 500px)
 {
     .game-cell
     {
         font-size: 26px;
     }
+
 }
 
 @media only screen and (max-width: 450px)
@@ -1215,6 +1453,33 @@ header nav .dark_mode i
     {
         font-size: 24px;
     }
+
+    .difficulties h1 
+    {
+        font-size: 1.5rem;
+    }
+
+    .new-game.mobile h1 
+    {
+        font-size: 1.25rem;
+    }
+
+    .timer.mobile h2
+    {
+        font-size: 1.25rem;
+    }
+
+    .timer.mobile .pause-time
+    {
+        font-size: 1.5rem;
+    }
+
+    .board_corners
+    {
+        transform: translateY(3.5rem);
+    }
+
+    
 }
 
 @media only screen and (max-width: 400px)
@@ -1222,6 +1487,32 @@ header nav .dark_mode i
     .game-cell
     {
         font-size: 22px;
+    }
+
+    .difficulties h1 
+    {
+        font-size: 1.25rem;
+    }
+
+    .new-game.mobile h1 
+    {
+        font-size: 1rem;
+    }
+
+    .timer.mobile h2
+    {
+        font-size: 1rem;
+    }
+
+    .timer.mobile .pause-time
+    {
+        font-size: 1.25rem;
+        transform: translateY(-.05rem) translateX(-.35rem);
+    }
+
+    .board_corners
+    {
+        transform: translateY(2.5rem);
     }
 }
 

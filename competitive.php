@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="styles/style.css" defer>
     <link rel="stylesheet" href="styles/form.css" defer>
+    <link rel="stylesheet" href="styles/gameModes.css" defer>
     <?php 
         if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
             echo '<script src="scripts/script.js" type="module" defer></script>';
@@ -31,7 +32,7 @@
         if (!isset($_SESSION['login_required']) || !$_SESSION['login_required']) {
 
             echo '
-                <div class="end-game active competitive">
+                <div class="end-game login active competitive">
                     <div class="game-result-card competitive">
                         <p class="login_required_message">You need to be logged in to access this page!</p>
                         <a href="login_form/forms/signup"><button type="button" class="page_buttons">Create an account here!</button></a>
@@ -96,6 +97,35 @@
                 
             </div> 
 
+            <div class="board_corners">
+                    
+                    <div class="timer mobile">
+                        <h2><span class="timer_text"></span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                        
+                    </div>
+
+                    <div class="new-game mobile">
+                        <h1>New Game</h1>
+                        
+                    </div>
+
+                    <div class="new-game-selector mobile">
+                        <h1>Select difficulty</h1>
+
+                        <div class="mode_selector">
+                            <div class="easy">Easy</div>
+                            <div class="medium">Medium</div>
+                            <div class="hard">Hard</div>
+                        </div>
+
+                        <div class="restart">
+                            <button type="button"><i class="fas fa-redo"></i> Restart </button>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
             <div class="difficulties">
                     <h1 class="easy">Easy</h1>
                 
@@ -116,7 +146,7 @@
                     <h1>New Game</h1>
                 </div>
 
-                <div class="new-game-selector">
+                <div class="new-game-selector desktop">
                     <h1>Select difficulty</h1>
 
                     <div class="mode_selector">

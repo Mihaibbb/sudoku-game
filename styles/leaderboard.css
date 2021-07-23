@@ -138,6 +138,7 @@
     
 }
 
+
 .row .score-item,
 .row.dark .score-item
 {
@@ -174,4 +175,68 @@ hr
 {
     width: 84%;
     max-width: 100rem;
+}
+
+
+@media only screen and (max-width: 1000px)
+{
+    .row li,
+    .row-title li,  
+    .row .score-item,
+    .row.dark .score-item
+    {
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 700px)
+{
+    .row li,
+    .row-title li,  
+    .row .score-item,
+    .row.dark .score-item
+    {
+        font-size: 18px;
+    }
+
+    .row > li:nth-child(2),
+    .row-title > li:nth-child(2)
+    {
+        margin-left: -25px;
+    }
+}
+
+@media only screen and (max-width: 500px)
+{
+    .row li,
+    .row-title li,  
+    .row .score-item,
+    .row.dark .score-item
+    {
+        font-size: 14px;
+    }
+
+    
+    .row > li:nth-child(2)
+    {
+        margin-left: -15px;
+    }
+}
+
+@media only screen and (max-width: 400px)
+{
+    .row li,
+    .row-title li,  
+    .row .score-item,
+    .row.dark .score-item
+    {
+        font-size: 14px;
+    }
+
+    
+    .row > li:nth-child(2),
+    .row-title > li:nth-child(2)
+    {
+        margin-left: -20px;
+    }
 }

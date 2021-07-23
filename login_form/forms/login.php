@@ -37,9 +37,9 @@
             </div>
             
             <form action="../includes/login.inc.php" method="POST" class="login-form">
-                <input type="text" name="email" placeholder="Your email..."> 
+                <input type="text" name="email" placeholder="Your email or username..."> 
                 <input type="password" name="password" class="password1" placeholder="Your password...">
-                <a href="./reset-password">
+                <a href="../../reset-password">
                     <p class="forgot-password">Forgot your password?</p>
                 </a>
                 <div class="checkbox-content">

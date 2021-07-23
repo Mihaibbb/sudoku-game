@@ -1,0 +1,119 @@
+body 
+{
+    background: linear-gradient(90deg, rgba(0,112,255,1) 35%, rgba(0,212,255,1) 100%);
+    
+}
+
+.container 
+{
+    min-height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback_container 
+{
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    min-height: 450px;
+   
+    margin: 0 auto;
+
+    
+    background: white;
+    border-radius: 8px;
+    box-shadow: 5px 5px 18px rgba(0, 0, 0, .35);
+
+    
+}
+
+.feedback_container .title 
+{
+    font-size: 24px;
+    
+    font-weight: 600;
+    text-align: center;
+    color: #252525;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    
+
+}
+
+.feedback_container .content 
+{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+
+.feedback_container .content .comment  
+{
+    margin: 0 auto;
+    resize: none;
+    width: 100%;
+    max-width: 500px;
+    height: 175px;
+    border: 2px solid rgb(52,72,97);
+    outline: none;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.feedback_container .content .rating,
+.stars
+{
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.feedback_container .content .rating .stars 
+{
+    font-size: 30px;
+    color: orange;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+
+.feedback_container .content .improvements h2
+{
+    font-size: 24px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-weight: 600;
+}
+
+.feedback_container .content button 
+{
+    width: 100%;
+    max-width: 325px;
+    min-height: 50px;
+    margin-bottom: 20px;
+    outline: none;
+    border: none;
+    background: linear-gradient(90deg, rgba(0,112,255,1) 35%, rgba(0,212,255,1) 100%);
+    border-radius: 25px;
+    color: white;
+    font-size: 1.4rem;
+    font-family: 'Poppins', sans-serif;
+    background-size: 125%;
+    font-weight: 400;
+    cursor: pointer;
+}

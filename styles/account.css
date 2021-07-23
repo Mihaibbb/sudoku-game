@@ -216,3 +216,67 @@ body {
     margin: 0 1rem;
     
 }
+
+@media only screen and (max-width: 1240px)
+{
+    .container 
+    {
+        display: block;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    
+    .graphics_container canvas
+    {
+        width: 100%;
+        
+    }
+
+    .account-card,
+    .account-stats,
+    .chart
+    {
+        width: 100%;
+        margin: .5rem 0 2rem;
+    }
+
+    .account-stats,
+    .chart
+    {
+        margin: 5rem 0;
+    }
+
+    .account-card h2
+    {
+        margin: 0rem 0 0;
+        transform: translateY(1rem);
+    }
+
+    .account-card .detail 
+    {
+       
+        margin: 1.25rem 0;
+    }
+
+    .account-card,
+    .account-stats,
+    .chart.diff
+    {
+        border-bottom: 3px solid #000;
+        border-right: none;
+    }
+
+    .graphics_container
+    {
+        display: block;
+        padding: 0 1rem;
+    }
+
+    .graphics_container canvas 
+    {
+        width: 100%;
+        max-width: 100%;
+    }
+
+}

@@ -17,11 +17,12 @@ export default class Sudoku {
         this.sudokuBoard = sudokuBoard;
         this.mistakeBoard = this.sudokuInitBoard;
         this.hintsBoard = this.sudokuInitBoard;
-    
+        console.log(this.sudokuInitBoard);
         this.gameRunning = true;
         this.gameResult = undefined;
         this.gameResultCard = document.querySelector('.game-result-card');
-
+        if (localStorage.getItem(this.gameMode + "-init-board") !== null) this.initBoard = JSON.parse(localStorage.getItem(this.gameMode + "-init-board"));
+        else this.initBoard = this.sudokuInitBoard;
     }
 
     // Function that returns the board move, even if it's a good move or a bad move
@@ -124,7 +125,14 @@ export default class Sudoku {
                     cell.classList.add('not-editable');
                 }
 
-                
+                if (this.gameMode === 'simple') {
+                    const questionMark = document.createElement('i');
+                    questionMark.classList.add('question-mark');
+                    questionMark.classList.add('hide');
+                    questionMark.classList.add('fas');
+                    questionMark.classList.add('fa-question');
+                    cell.appendChild(questionMark);
+                }
                 
 
                 if (i == this.middleCenterX && j == this.middleCenterY) {
@@ -141,12 +149,13 @@ export default class Sudoku {
                     cell.classList.add('middleCell');
                 }
 
+                
                 row.appendChild(cell);
             }
 
             this.board.appendChild(row);
             // Changing the actual board
-            
+
         }
 
         this.allCells = document.querySelectorAll('.game-cell');
@@ -332,22 +341,36 @@ export default class Sudoku {
         
         if (number === '') {
             const highlightedCells = document.querySelectorAll('.chosen_row_column_square');
-            
+            const currBoard = this.boardWithCurrentMove();
             highlightedCells.forEach(highlightedCell => {
                 highlightedCell.classList.remove('failedCell');
                 highlightedCell.classList.remove('failedCellBg');
             });
 
-            displayedCell.innerText = number;
+            displayedCell.innerHTML = `${number} <i class="question-mark hide fas fa-question"></i>`;
+            this.doubleVerify(this.initBoard, currBoard);
             return;
         } 
+
+        const questionMark = displayedCell.querySelector('.question-mark');
 
         // For accessing the player's board cells and rows 
         if (!displayedCell.classList.contains('not-editable')) {
 
+            if (questionMark !== null) questionMark.classList.add('hide');
+
             if (this.possible(this.cellX, this.cellY, number)) {
                 displayedCell.classList.remove('failedCell'); 
                 displayedCell.classList.add('passedCell');
+                console.log(displayedCell);
+                
+                
+                console.log(this.gameMode);
+                if (this.gameMode === "simple" && !this.compareSolveBoard(this.cellX, this.cellY, number)) {
+                    console.log(questionMark);
+                    if (questionMark !== null) questionMark.classList.remove('hide');
+                }
+                
             } else {
 
                 if (this.mistakeBoard[this.cellX][this.cellY] !== number) {
@@ -373,7 +396,10 @@ export default class Sudoku {
                 
             }
 
-            displayedCell.innerText = number;
+
+            if (questionMark !== null) displayedCell.innerHTML = `${number} <i class="question-mark ${questionMark.classList.contains('hide') ? "hide" : ""} fas fa-question"></i>`;
+            else displayedCell.innerHTML = number;
+            
             if (this.checkGameEnds()) {
                 this.gameRunning = false;
                 this.gameResult = 'win';
@@ -391,6 +417,7 @@ export default class Sudoku {
         }
 
         saveBoard(currBoard, this.gameMode);
+        this.doubleVerify(this.initBoard, currBoard);
     }
 
     checkHintedCellInArchive(x, y, value) {
@@ -422,6 +449,14 @@ export default class Sudoku {
         const row = document.querySelectorAll('.game-row')[x];
         const cell = row.querySelectorAll('.game-cell')[y];
         if (cell.classList.contains('correctCell')) return true;
+        return false;
+    }
+
+    compareSolveBoard(x, y, number) {
+        const correctCell = this.solvedBoard[x][y];
+        console.log(this.solvedBoard, this.solvedBoard[x][y], number);
+        if (parseInt(correctCell) === parseInt(number)) return true;
+
         return false;
     }
 
@@ -503,11 +538,92 @@ export default class Sudoku {
 
         if (mistakes > 0) return false;
         
-        
         // Changing the value of board with the chosen coords 
         this.realTimeBoard[row][column] = number;
         return true;      
     } 
+
+    doubleVerify(init, curr) {
+        init.forEach((initRow, rowIdx) => {
+            initRow.forEach((initCell, cellIdx) => {
+                if (initCell !== curr[rowIdx][cellIdx]) {
+                    const currCell = curr[rowIdx][cellIdx];
+                    const displayedRow = document.querySelectorAll('.game-row')[rowIdx];
+                    const displayedCell = displayedRow.querySelectorAll('.game-cell')[cellIdx];
+                    console.log(displayedCell, rowIdx, cellIdx)
+                    if (this.possible(rowIdx, cellIdx, currCell)) {
+                        displayedCell.classList.remove('failedCell'); 
+                        displayedCell.classList.add('passedCell');
+                        console.log(displayedCell, 'ok')
+                    } else {
+                        
+                        displayedCell.classList.add('failedCell');
+                        displayedCell.classList.remove('passedCell'); 
+                        console.log(displayedCell, 'not ok')
+                    }
+                }
+            });
+        });
+
+        init.forEach((initRow, rowIdx) => {
+            initRow.forEach((initCell, cellIdx) => {
+                if (initCell !== curr[rowIdx][cellIdx]) {
+                    const currCell = curr[rowIdx][cellIdx];
+                    const displayedRow = document.querySelectorAll('.game-row')[rowIdx];
+                    const displayedCell = displayedRow.querySelectorAll('.game-cell')[cellIdx];
+                    console.log(displayedCell, rowIdx, cellIdx)
+                    
+                    if (currCell !== this.solvedBoard[rowIdx][cellIdx]) {
+                        displayedCell.classList.add('failedCell');
+                        displayedCell.classList.remove('passedCell'); 
+                    }
+                }
+            });
+        });
+
+        init.forEach((initRow, rowIdx) => {
+            initRow.forEach((initCell, cellIdx) => {
+                if (initCell !== curr[rowIdx][cellIdx]) {
+                    const currCell = curr[rowIdx][cellIdx];
+                    const displayedRow = document.querySelectorAll('.game-row')[rowIdx];
+                    const displayedCell = displayedRow.querySelectorAll('.game-cell')[cellIdx];
+                    console.log(displayedCell, rowIdx, cellIdx)
+                    
+                    if (this.checkPossible(rowIdx, cellIdx, currCell)) {
+                        displayedCell.classList.remove('failedCell');
+                        displayedCell.classList.add('passedCell'); 
+                    } else {
+                        displayedCell.classList.add('failedCell');
+                        displayedCell.classList.remove('passedCell'); 
+                    }
+                }
+            });
+        });
+    }
+
+    checkPossible(row, column, number) {
+        // Checking the row
+        for (let i = 0; i < 9; i++) {
+            if (this.realTimeBoard[row][i] === number && column !== i) return false;
+        }
+
+        // Checking the column
+        for (let i = 0; i < 9; i++) {
+            if (this.realTimeBoard[i][column] === number && row != i) return false;
+        }
+
+        const squareX = Math.floor(row / 3) * 3;
+        const squareY = Math.floor(column / 3) * 3;
+
+        // Checking the square
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (this.realTimeBoard[squareX + i][squareY + j] === number && row !== (squareX + i) && column !== (squareY + j)) return false;
+            }
+        }
+
+        return true;
+    }
     
     // Pause board if timer is off
     pauseBoard() {
@@ -515,7 +631,7 @@ export default class Sudoku {
         cells.forEach((cell, index) => {
             
             if (index !== parseInt(cells.length / 2)) {
-                cell.innerText = '';                
+                cell.innerHTML = `<i class="question-mark hide fas fa-question"></i>`;                
             }
 
             if (index === parseInt(cells.length / 2)) {
@@ -534,7 +650,7 @@ export default class Sudoku {
                 const rows = document.querySelectorAll('.game-row')[i];
                 const cell = rows.querySelectorAll('.game-cell')[j];
                 if (this.realTimeBoard[i][j] !== 0) {
-                    cell.innerText = this.realTimeBoard[i][j];
+                    cell.innerHTML = `${this.realTimeBoard[i][j]} <i class="question-mark hide fas fa-question"></i>`;
                 }
 
                 if (i === 4 && j === 4 && this.realTimeBoard[i][j] === 0) {

@@ -33,7 +33,7 @@
     <div class="content">
         <div class="card">
             <div class="title">
-                <h1>Reset your password!</h1>
+                <h1>Reset your password</h1>
             </div>
             
             <form action="./forgot_password/includes/reset-request.inc.php" method="POST">

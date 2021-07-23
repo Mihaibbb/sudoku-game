@@ -7,7 +7,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $remember_user = $_POST['remember_user'];
 
-$sql = "SELECT * FROM users WHERE email='$email'";
+$sql = "SELECT * FROM users WHERE email='$email' OR username='$email';";
 $result = mysqli_query($conn, $sql);
 
 while ($row = $result->fetch_assoc()) {

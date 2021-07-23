@@ -10,12 +10,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account</title>
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/account.css">
+    <?php 
+        if (isset($_GET["id"])) {
+            echo '<link rel="stylesheet" href="../../styles/style.css">
+            <link rel="stylesheet" href="../../styles/account.css">';
+        } else {
+            echo '<link rel="stylesheet" href="./styles/style.css">
+            <link rel="stylesheet" href="./styles/account.css">';
+        }
+    ?>
+    
     <?php require_once "./sections/fonts.php"; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer></script>
-    <script src="./scripts/account.js" defer></script>
+    <?php 
+        if (isset($_GET["id"])) {
+            echo '<script src="../../scripts/account.js" defer></script>';
+        } else {
+            echo '<script src="./scripts/account.js" defer></script>';
+        }
+    ?>
+    
 </head>
 <body>
 
@@ -27,17 +42,19 @@
         $result = $conn->query($sql);
         $number = 0;
 
-        $user_id = $_SESSION["user_id"];
+        
 
         if (isset($_GET["id"])) {
             $user_id = $_GET["id"];
+        } else {
+            $user_id = $_SESSION["user_id"];
         }
 
         while ($row = $result->fetch_assoc()) {
             
             $number++;  
 
-            if ($row["id"] === $_SESSION["user_id"]) {
+            if ($row["id"] === $user_id) {
                 break;
             }
         }

@@ -105,16 +105,13 @@ $result4 = $conn->query($sql);
 $sql = "UPDATE users SET mistakes='$total_mistakes' WHERE id='$user_id';";
 $result5 = $conn->query($sql);
 
-$sql = "UPDATE users SET time_played='$total_time' WHERE id='$user_id';";
-$result6 = $conn->query($sql);
-
 $sql = "UPDATE users SET mistakes_matches='$mistakes_matches' WHERE id='$user_id';";
 $result7 = $conn->query($sql);
 
 $sql = "UPDATE users SET all_times='$all_times' WHERE id='$user_id';";
 $result8 = $conn->query($sql);
 
-if ($result && $result2 && $result3 && $result4 && $result5 && $result6 && $result7 && $result8) {
+if ($result && $result2 && $result3 && $result4 && $result5 && $result7 && $result8) {
     $_SESSION["score"] = $final_score;
     $_SESSION["last_match_score"] = $score;
     $_SESSION["time"] = $time;

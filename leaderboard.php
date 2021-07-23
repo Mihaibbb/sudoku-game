@@ -48,7 +48,7 @@
             $result = $conn->query($sql);
             $position = 1;
             while ($row = $result->fetch_assoc()) {
-                echo "<a href='./account?id=". $row["id"] ."'>";
+                echo "<a href='./account/id/". $row["id"] ."'>";
 
 
                 if ($position % 2 !== 0) {

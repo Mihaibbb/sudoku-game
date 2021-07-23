@@ -320,7 +320,11 @@ export default class ReverseSudoku {
     
     solveCurrentBoard() {
         if (this.board.classList.contains('paused')) return;
+        
+        
         const currBoard = this.boardWithCurrentMove();
+        console.log(currBoard);
+        
         console.log((currBoard));
 
         const boardFailElement = this.mistakeContent.querySelector("p");
@@ -328,19 +332,62 @@ export default class ReverseSudoku {
         if (!this.possibleBoard(currBoard)) {
             if (boardFailElement !== null) return;
             const boardFail = document.createElement("p");
-            boardFail.innerText = "Current board is not a valid one!";
+            boardFail.innerText = "Current board is not a valid one.<br>";
             this.mistakeContent.appendChild(boardFail);
             return;
         }
 
+        
+        console.log('solved');
+
+        
+
+        if (localStorage.getItem("competitive-init-board") !== null) {
+            
+            const competitiveInitBoard = JSON.parse(localStorage.getItem("competitive-init-board"));
+            let solvedCompetitiveBoard = competitiveInitBoard;
+            let solvedCurrBoard = currBoard;
+            
+            // Solving the competitive and the current board 
+            solveBoard(solvedCompetitiveBoard);
+            solveBoard(solvedCurrBoard);
+
+            if (this.sameBoards(competitiveInitBoard, currBoard) || this.sameBoards(solvedCompetitiveBoard, solvedCurrBoard)) {
+                if (boardFailElement !== null) return;
+                const boardFail = document.createElement("p");
+                boardFail.innerText = "We can't help you with your competitive board😔.";
+                this.mistakeContent.appendChild(boardFail);
+                return;
+                
+            }
+        }
+
+
+        
         if (boardFailElement !== null) {
             boardFailElement.remove();
         }
 
-        console.log('solved');
+                
         solveBoard(this.realTimeBoard);
         
         if (this.fullBoard()) this.printSolvedBoard();
+    }
+
+    sameBoards(board1, board2) {
+        let same = true;
+        console.log(board1, board2);
+        board1.forEach((row, rowIdx) => {
+            row.forEach((cell, cellIdx) => {
+               
+                if (cell !== board2[rowIdx][cellIdx] && cell !== 0) {
+                    console.log(rowIdx, cellIdx)
+                    same = false; 
+                }
+            });
+        });
+
+        return same;
     }
 
     printSolvedBoard() {

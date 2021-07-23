@@ -29,6 +29,7 @@ const newGame = document.querySelector('.new-game h1');
 // Compute titles
 
 const commandTitles = document.querySelectorAll(".command-title");
+const allCommands = document.querySelectorAll('.command');
 const undoButton = document.querySelector('.undoContainer');
 const eraseButton = document.querySelector('.eraseContainer');
 const solveButton = document.querySelector('.solveContainer');
@@ -36,6 +37,9 @@ const solveButton = document.querySelector('.solveContainer');
 const solveTitle = solveButton.querySelector('.command-title');
 const undoTitle = undoButton.querySelector('.command-title');
 const eraseTitle = eraseButton.querySelector('.command-title');
+
+const numbersTextContent = document.querySelectorAll('.number span');
+const commandIcons = document.querySelectorAll('.command i');
 
 // Header items
 
@@ -347,3 +351,111 @@ const lightMode = () => {
 
  if (JSON.parse(localStorage.getItem("darkMode")) === "on") darkMode();
  else if (JSON.parse(localStorage.getItem("darkMode")) === "off") lightMode();
+
+ let currWidth = window.innerWidth 
+        || document.documentElement.clientWidth 
+        || document.body.clientWidth;
+
+
+const numbersGrid = document.querySelector('.numbers-grid');
+const numbers = document.querySelectorAll('.number');
+const gameControl = document.querySelector('.game-control');
+
+    if (window.innerWidth <= 700) {
+        
+        currWidth = currWidth - ((10 * currWidth) / 100);
+
+        if (currWidth <= 700) {
+
+            numbersGrid.style.width = `${currWidth}px`;
+            numbers.forEach(number => {
+                number.style.width = `${currWidth / 9}px`;
+                number.style.height = `${currWidth / 9}px`;
+            });
+
+
+            board.style.height = `${currWidth}px`;
+            board.style.width = `${currWidth}px`;
+
+            
+            cells.forEach(cell => {
+                cell.style.width = `${currWidth / 9}px`;
+                cell.style.height = `${currWidth / 9}px`;
+
+            });
+
+            gameControl.style.width = `${currWidth}px`;
+            allCommands.forEach(command => {
+                command.style.width = `${currWidth / 4}px`;
+            
+            }); 
+
+            if (currWidth <= 500) {
+
+                numbersTextContent.forEach(numberTextContent => {
+                    numberTextContent.style.fontSize = `${currWidth / 12}px`;
+                });
+
+                commandTitles.forEach(commandTitle => {
+                    commandTitle.style.fontSize = `${currWidth / 18}px`;
+                });
+
+                commandIcons.forEach(commandIcon => {
+                    commandIcon.style.fontSize = `${currWidth / 18}px`;
+                });
+
+            }
+        }
+    }
+
+ // Responsive resize event listener
+ window.addEventListener('resize', () => {
+
+    if (window.innerWidth > 700) return;
+
+    currWidth = window.innerWidth 
+    || document.documentElement.clientWidth 
+    || document.body.clientWidth;
+    
+    currWidth = currWidth - ((10 * currWidth) / 100);
+
+    if (currWidth > 700) return;
+
+    numbersGrid.style.width = `${currWidth}px`;
+    numbers.forEach(number => {
+        number.style.width = `${currWidth / 9}px`;
+        number.style.height = `${currWidth / 9}px`;
+    });
+
+
+    board.style.height = `${currWidth}px`;
+    board.style.width = `${currWidth}px`;
+
+    
+    cells.forEach(cell => {
+        cell.style.width = `${currWidth / 9}px`;
+        cell.style.height = `${currWidth / 9}px`;
+
+    });
+
+    gameControl.style.width = `${currWidth}px`;
+    allCommands.forEach(command => {
+        command.style.width = `${currWidth / 4}px`;
+       
+    }); 
+
+    if (currWidth > 500) return;
+
+    numbersTextContent.forEach(numberTextContent => {
+        numberTextContent.style.fontSize = `${currWidth / 12}px`;
+    });
+
+    commandTitles.forEach(commandTitle => {
+        commandTitle.style.fontSize = `${currWidth / 18}px`;
+    });
+
+    commandIcons.forEach(commandIcon => {
+        commandIcon.style.fontSize = `${currWidth / 18}px`;
+    });
+   
+});

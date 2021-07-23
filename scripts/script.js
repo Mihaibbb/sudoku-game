@@ -8,10 +8,10 @@ let sudokuBoard = [];
 
     const endGame = document.querySelector('.end-game');
     const gameMode = document.querySelector('.game-mode').innerText.toLowerCase();
+    console.log(gameMode)
     const table = document.querySelector(".board");
     const difficulty = document.querySelector(".difficulties h1");
     const mistakesCounter = localStorage.getItem(gameMode + "-mistakes") !== null ? JSON.parse(localStorage.getItem(gameMode + "-mistakes")) : 0;
- 
 
     if (localStorage.getItem(gameMode + "-difficulty") !== null) {
         difficulty.innerText = JSON.parse(localStorage.getItem(gameMode + "-difficulty"));
@@ -24,12 +24,34 @@ let sudokuBoard = [];
         }
     }
 
-    
+    const checkLogin = () => {
+        const xmlReq = new XMLHttpRequest();
+
+        xmlReq.open('GET', './login_storage.inc.php');
+         //Send the proper header information along with the request
+        
+
+        xmlReq.onreadystatechange = function() {//Call a function when the state changes.
+            if(xmlReq.readyState == 4 && xmlReq.status == 200) {
+                if (xmlReq.responseText === true) {
+                    localStorage.clear();
+                    location.reload();
+                }
+                
+            }
+        }
+ 
+        xmlReq.send("message=true");
+
+        
+    };
+
+    checkLogin();
+
     // Score local storage
    
     let defaultScore;
     let difficultyTextContent = difficulty.innerText.toLowerCase();
-
 
     const board = document.querySelector('.board');
     const score = document.querySelector('.score');
@@ -43,11 +65,9 @@ let sudokuBoard = [];
 
     if (localStorage.getItem(gameMode + "-score") === null) localStorage.setItem(gameMode + "-score", JSON.stringify(defaultScore));
 
-    
     if (localStorage.getItem(gameMode + "-score") !== null) {
         console.log(score.innerText);
         score.innerText = JSON.parse(localStorage.getItem(gameMode + "-score"));
-        console.log(score);
     }
 
     let newSudokuBoard;
@@ -61,24 +81,29 @@ let sudokuBoard = [];
     let numberOfSeconds = await getLocalStoredNumberOfSeconds(gameMode);
     let numberOfMinutes = await getLocalStoredNumberOfMinutes(gameMode);
     let numberOfHours = await getLocalStoredNumberOfHours(gameMode);
+
+
     let timeTarget = numberOfMinutes >= 5 ? numberOfMinutes + 1 : 5;
 
     if (screen.width > 1920) {
         const scaleX = screen.width / 1920;
-        gameElement.style.transform = 'scale(' + scaleX + ')';
+        gameElement.style.transform = `scale(${scaleX})`;
     } else {
-        gameElement.style.transform = 'scale(1.00001)';
+        gameElement.style.transform = `scale(1.00001)`;
     }
 
     // Header items
-    const sudokuGameItem = document.querySelector('.sudoku_game_item');
-    const tipsAndTricksItem = document.querySelector('.tips_and_tricks_item');
-    const loginItem = document.querySelector('.log_in_item');
-    const signupItem = document.querySelector('.sign_up_item');
-    const logoutItem = document.querySelector('.log_out_item');
-    const accountItem = document.querySelector('.account_item');
+    const sudokuGameItem = document.querySelector('.sudoku_game_item a');
+    const tipsAndTricksItem = document.querySelector('.tips_and_tricks_item a');
+    const loginItem = document.querySelector('.log_in_item a');
+    const signupItem = document.querySelector('.sign_up_item a');
+    const logoutItem = document.querySelector('.log_out_item a');
+    const accountItem = document.querySelector('.account_item a');
+    const leaderboardItem = document.querySelector('.leaderboard_item a');
 
     // Header 
+
+    // Change language
 
     const language = document.querySelector('img.language');
     language.addEventListener('click', () => {
@@ -93,10 +118,9 @@ let sudokuBoard = [];
         
     });
 
-
-
-
     const timer = document.querySelector('.timer.desktop');
+    const timerMobile = document.querySelector('.timer.mobile');
+    console.log(timerMobile);
     const hintsCount = document.querySelector('.hint-counter');
 
     if (localStorage.getItem(gameMode + "-hints") !== null) {
@@ -109,16 +133,26 @@ let sudokuBoard = [];
     const classicMode = document.querySelector('.modes .mode.classic');
     const competitiveMode = document.querySelector('.modes .mode.competitive');
     const reverseMode = document.querySelector('.modes .mode.reverse');
-    const newGame = document.querySelector('.new-game h1');
+    const newGame = document.querySelector('.new-game.desktop h1');
     const signUpMessage = document.querySelector('.login_request .sign_up_message');
     const loginMessage = document.querySelector('.login_request .log_in_message');
     const errLoginMessage = document.querySelector('.login_request .fail');
+
+    // Desktop time elements
 
     const timeSeconds = timer.querySelector('.seconds');
     const timeMinutes = timer.querySelector('.minutes');
     const timeHours = timer.querySelector('.hours');
     const timerText = timer.querySelector('.timer_text');
     const timeContent = timer.querySelector(".timer h2 span.time");
+
+    // Mobile time elements
+
+    const timeSecondsMobile = timerMobile.querySelector('.seconds');
+    const timeMinutesMobile = timerMobile.querySelector('.minutes');
+    const timeHoursMobile = timerMobile.querySelector('.hours');
+    const timerTextMobile = timerMobile.querySelector('.timer_text');
+    const timeContentMobile = timerMobile.querySelector(".timer h2 span.time");
 
     const game = new Sudoku(gameElement, newSudokuBoard, board, score, hintsCount, gameMode, difficulty.innerText, mistakesCounter);
 
@@ -136,6 +170,7 @@ let sudokuBoard = [];
     const rows = document.querySelectorAll('.game-row');
 
     // Compute buttons
+    const allCommands = document.querySelectorAll('.command');
     const scoreButton = document.querySelector('.scoreContainer');
     const eraseButton = document.querySelector('.eraseContainer');
     const undoButton = document.querySelector('.undoContainer');
@@ -149,25 +184,127 @@ let sudokuBoard = [];
     const hintTitle = hintButton.querySelector('.command-title');
     const undoTitle = undoButton.querySelector('.command-title');
     const eraseTitle = eraseButton.querySelector('.command-title');
-    
-    // Responsive resize event listener
-    window.addEventListener('resize', () => {
-        
-        let currWidth = window.innerWidth 
+
+    const numbersGrid = document.querySelector('.numbers-grid');
+    const numbers = document.querySelectorAll('.number');
+    const numbersTextContent = document.querySelectorAll('.number span');
+
+    const gameControl = document.querySelector('.game-control');
+    const boardPlayButton = document.querySelector('.play-button');
+
+    const commandIcons = document.querySelectorAll('.command i');
+    const scoreTextContent = document.querySelector('.command span.score');
+
+    let currWidth = window.innerWidth 
         || document.documentElement.clientWidth 
         || document.body.clientWidth;
 
-        if (currWidth > 600) return;
-        currWidth -= 25;
+    if (window.innerWidth <= 700) {
+        
+        
+
+        currWidth = currWidth - ((10 * currWidth) / 100);
+
+        if (currWidth <= 700) {
+
+            numbersGrid.style.width = `${currWidth}px`;
+            numbers.forEach(number => {
+                number.style.width = `${currWidth / 9}px`;
+                number.style.height = `${currWidth / 9}px`;
+            });
+
+
+            table.style.height = `${currWidth}px`;
+            table.style.width = `${currWidth}px`;
+
+            
+            cells.forEach(cell => {
+                cell.style.width = `${currWidth / 9}px`;
+                cell.style.height = `${currWidth / 9}px`;
+
+            });
+
+            gameControl.style.width = `${currWidth}px`;
+            allCommands.forEach(command => {
+                command.style.width = `${currWidth / 4}px`;
+            
+            }); 
+
+            if (currWidth <= 500) {
+
+                numbersTextContent.forEach(numberTextContent => {
+                    numberTextContent.style.fontSize = `${currWidth / 12}px`;
+                });
+
+                commandTitles.forEach(commandTitle => {
+                    commandTitle.style.fontSize = `${currWidth / 18}px`;
+                });
+
+                commandIcons.forEach(commandIcon => {
+                    commandIcon.style.fontSize = `${currWidth / 18}px`;
+                });
+
+                scoreTextContent.style.width = `${currWidth / 18}px`;
+
+                hintsCount.style.width =  `${currWidth / 18}px`;
+            }
+        }
+    }
+    
+    // Responsive resize event listener
+    window.addEventListener('resize', () => {
+
+        if (window.innerWidth > 700) return;
+
+        currWidth = window.innerWidth 
+        || document.documentElement.clientWidth 
+        || document.body.clientWidth;
+        
+        currWidth = currWidth - ((10 * currWidth) / 100);
+
+        if (currWidth > 700) return;
+
+        numbersGrid.style.width = `${currWidth}px`;
+        numbers.forEach(number => {
+            number.style.width = `${currWidth / 9}px`;
+            number.style.height = `${currWidth / 9}px`;
+        });
+
 
         table.style.height = `${currWidth}px`;
+        table.style.width = `${currWidth}px`;
+
         
         cells.forEach(cell => {
             cell.style.width = `${currWidth / 9}px`;
             cell.style.height = `${currWidth / 9}px`;
+
         });
 
-        
+        gameControl.style.width = `${currWidth}px`;
+        allCommands.forEach(command => {
+            command.style.width = `${currWidth / 4}px`;
+           
+        }); 
+
+        if (currWidth > 500) return;
+
+        numbersTextContent.forEach(numberTextContent => {
+            numberTextContent.style.fontSize = `${currWidth / 12}px`;
+        });
+
+        commandTitles.forEach(commandTitle => {
+            commandTitle.style.fontSize = `${currWidth / 18}px`;
+        });
+
+        commandIcons.forEach(commandIcon => {
+            commandIcon.style.fontSize = `${currWidth / 18}px`;
+        });
+
+        scoreTextContent.style.width = `${currWidth / 18}px`;
+
+        hintsCount.style.width =  `${currWidth / 18}px`;
+       
     });
 
 
@@ -338,8 +475,13 @@ let sudokuBoard = [];
     }
 
     // Click event for pause/play button
-    const boardPlayButton = timer.querySelector('.play-button');
+    
     const timerPauseButton = timer.querySelector('.pause-time');
+
+    
+    const timerPauseButtonMobile = timerMobile.querySelector('.pause-time');
+    
+    
     // if (gameMode === 'Competitive') {
     //     timerPauseButton.classList.add('hide');
     //     boardPlayButton.classList.add('hide');
@@ -373,6 +515,38 @@ let sudokuBoard = [];
         }
     });
 
+    if (timerPauseButtonMobile !== null) {
+        timerPauseButtonMobile.addEventListener('click', () => {
+        
+            timerMobile.classList.toggle('paused');
+            board.classList.toggle('paused');
+    
+            if (timerMobile.classList.contains('paused')) {
+                timerPauseButtonMobile.innerHTML = "<i class='fas fa-play-circle'></i>";
+                game.pauseBoard();
+                
+                const middleCell = [...cells].find((cell, idx) => {
+                    return cell.classList.contains('middleCell');
+                });
+            
+                middleCell.addEventListener('click', () => {
+                    
+                    timerMobile.classList.remove('paused');
+                    board.classList.remove('paused');
+                    timerPauseButtonMobile.innerHTML = "<i class='fas fa-pause-circle'></i>";
+                    game.continueBoard();
+                });
+    
+            } else {
+                game.continueBoard();
+                timerPauseButtonMobile.innerHTML = '<i class="fas fa-pause-circle"></i>';
+                
+            }
+        });
+    }
+
+    
+
 
     // Timer count
 
@@ -380,15 +554,41 @@ let sudokuBoard = [];
         console.log(JSON.parse(localStorage.getItem(gameMode + "-time-seconds")))
     }
 
+    const updateDBTimer = (delay) => {
+        const xmlReq = new XMLHttpRequest();
+
+        xmlReq.open('POST', './update_time/update_time.inc.php');
+         //Send the proper header information along with the request
+        xmlReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xmlReq.onreadystatechange = function() {//Call a function when the state changes.
+            if(xmlReq.readyState == 4 && xmlReq.status == 200) {
+                console.log(xmlReq.responseText);
+            }
+        }
+ 
+        xmlReq.send(`time=${delay}`);
+       
+    };
+
+    
+ 
+
     const counter = () => {
 
-        if (timer.classList.contains('paused')) return;
+        if (timer.classList.contains('paused') || timerMobile.classList.contains('paused')) return;
+
 
         if (numberOfMinutes > 59) {
             numberOfHours++;
             numberOfMinutes = 0;
             numberOfSeconds = 0;
             timeHours.innerText = numberOfHours + (timeHours.innerText.includes(':') ? 0 : ":");
+            
+        } 
+
+        if (numberOfHours > 0) {
+            timeHours.innerText = `0${numberOfHours}:`;
         }
 
         localStorage.setItem(gameMode + "-time-hours", JSON.stringify(numberOfHours));
@@ -409,25 +609,33 @@ let sudokuBoard = [];
 
         localStorage.setItem(gameMode + "-time-seconds", JSON.stringify(numberOfSeconds));
             
-        if (numberOfMinutes >= 45) {
+        if (numberOfMinutes >= 45 || numberOfHours > 0) {
 
             timer.classList.add('finalWave');
+            timerMobile.classList.add('finalWave');
             timerPauseButton.classList.add('finalWave');
+            timerPauseButtonMobile.classList.add('finalWave');
             timeMinutes.innerText = numberOfMinutes;
 
-        } else if (numberOfMinutes < 10) {
-
-            timeMinutes.innerText = "0" + numberOfMinutes;
-
-        } else if (numberOfMinutes >= 20) {
+        } else if (numberOfMinutes >= 20 || numberOfHours > 0) {
 
             timer.classList.add('secondWave');
+            timerMobile.classList.add('secondWave');
             timerPauseButton.classList.add('secondWave');
+            if (timerPauseButtonMobile !== null) {
+                timerPauseButtonMobile.classList.add('secondWave');
+            }
+            
             timeMinutes.innerText = numberOfMinutes;
 
         } else {
             timeMinutes.innerText = numberOfMinutes;
         }
+        
+        if (numberOfMinutes < 10) {
+
+            timeMinutes.innerText = "0" + numberOfMinutes;
+        } 
 
         localStorage.setItem(gameMode + "-time-minutes", JSON.stringify(numberOfMinutes));
         
@@ -443,14 +651,24 @@ let sudokuBoard = [];
                 game.gameFinal('lost');
                 localStorage.setItem(gameMode + "-end-game", JSON.stringify('lost'));
                 timer.classList.add("paused");
+                timerMobile.classList.add("paused");
             }
 
             timeTarget++;
         }
 
         numberOfSeconds++;
+
+        timeSecondsMobile.innerText = timeSeconds.innerText;
+        timeMinutesMobile.innerText = timeMinutes.innerText;    
+        timeHoursMobile.innerText = timeHours.innerText;
         
-    }
+        const time = numberOfHours * 3600 + numberOfMinutes * 60 + numberOfSeconds;
+        const DELAY = 1;
+                
+        if (gameMode === 'competitive') updateDBTimer(DELAY);
+        
+    };
 
     // Interval for timer going
     counter();
@@ -488,11 +706,24 @@ let sudokuBoard = [];
 
     const newGameButton = document.querySelector(".new-game.desktop");
     
-    const newGameSelector = document.querySelector(".new-game-selector");
+    const newGameSelector = document.querySelector(".new-game-selector.desktop");
+
+    const newGameButtonMobile = document.querySelector(".new-game.mobile");
+    
+    const newGameSelectorMobile = document.querySelector(".new-game-selector.mobile");
 
     newGameButton.addEventListener('click', () => {
         newGameSelector.classList.toggle('show_selector');
     });
+
+    newGameButtonMobile.addEventListener('click', () => {
+        newGameSelectorMobile.classList.toggle('show_selector');
+        if(newGameSelectorMobile.classList.contains('show_selector')) {
+            table.style.visibility = 'hidden';
+        } else {
+            table.style.visibility = 'visible';
+        }
+    }); 
 
     document.addEventListener('click', e => {
         
@@ -588,6 +819,7 @@ let sudokuBoard = [];
 
         sudokuGameItem.innerText = 'Sudoku Game';
         tipsAndTricksItem.innerText = 'Sudoku Tips & Tricks';
+        leaderboardItem.innerText = 'Leaderboard';
         if (loginItem !== null) {
             loginItem.innerText = 'Log In';
         }
@@ -623,6 +855,7 @@ let sudokuBoard = [];
 
         sudokuGameItem.innerText = 'Jocul Sudoku';
         tipsAndTricksItem.innerText = 'Sfaturi și trucuri Sudoku';
+        leaderboardItem.innerText = 'Clasament';
         if (loginItem !== null) {
             loginItem.innerText = 'Logheaza-te';
         }
@@ -638,6 +871,8 @@ let sudokuBoard = [];
         if (accountItem !== null) {
             accountItem.innerText = 'Contul Meu';
         }
+
+
         
         gameModeTitle.innerText = 'Moduri de joc';
         classicMode.innerText = 'Modul Clasic';
@@ -758,6 +993,7 @@ let sudokuBoard = [];
         return JSON.parse(localStorage.getItem(mode + "-time-hours"));
     }
 
+    
     function resetLocalStorage() {
        
        
@@ -817,6 +1053,8 @@ let sudokuBoard = [];
 
         if (gameMode === "classic") {
             window.location.href = "./"; 
+        } else if (gameMode === 'simple') {
+            window.location.href = "./simple";
         } else {
             window.location.href = "./competitive";
         }

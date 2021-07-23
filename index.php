@@ -9,15 +9,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Sudoku is one of the most interesting and mind-testing games ever existing.The goal of the sudoku game is to fill a 9x9 grid with numbers so that every row, column and 3x3 square grid to be fiiled with a number from 1 to 9.Come now and try our version of sudoku online.">
 
     <link rel="stylesheet" href="styles/style.css" defer>
+    <link rel="stylesheet" href="styles/gameModes.css" defer>
     <link rel="stylesheet" href="styles/form.css">
-    
+    <link rel="shortcut icon" type="image/jpeg" href="./img/favicon.jpeg">
 
     <script src="scripts/script.js" type="module"></script>
     <script src="./login_form/scripts/form-validation.js" defer></script>
     <script src="./login_form/scripts/form-validation-login.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+   
     
     <?php 
         require_once 'sections/fonts.php';
@@ -85,13 +87,33 @@
                     <a href="reverse"><div class="mode reverse">Reverse Mode</div></a>
                 </div>
 
-                <div class="timer mobile">
-                    <h2><span class="timer_text">Timer:</span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
-                    <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
-                </div>
+                <div class="board_corners">
+                    
+                    <div class="timer mobile">
+                        <h2><span class="timer_text"></span> <span class="time"><span class="hours"></span><span class="minutes">00</span>:<span class="seconds">00</span></span></h2>
+                        <div class="pause-time"><i class="fas fa-pause-circle"></i></div>
+                    </div>
 
-                <div class="new-game mobile">
-                    <h1>New Game</h1>
+                    <div class="new-game mobile">
+                        <h1>New Game</h1>
+                        
+                    </div>
+
+                    <div class="new-game-selector mobile">
+                        <h1>Select difficulty</h1>
+
+                        <div class="mode_selector">
+                            <div class="easy">Easy</div>
+                            <div class="medium">Medium</div>
+                            <div class="hard">Hard</div>
+                        </div>
+
+                        <div class="restart">
+                            <button type="button"><i class="fas fa-redo"></i> Restart </button>
+                        </div>
+                    </div>
+
+                    
                 </div>
                 
                 <div class="modes">
@@ -128,7 +150,7 @@
                     <h1>New Game</h1>
                 </div>
 
-                <div class="new-game-selector">
+                <div class="new-game-selector desktop">
                     <h1>Select difficulty</h1>
 
                     <div class="mode_selector">
@@ -187,7 +209,10 @@
             </div>
         </div>
 
-        
+
+       
+
+                
 
         <p class="login_request">
             <?php 

@@ -1,3 +1,8 @@
+body 
+{
+    overflow-x: hidden;
+}
+
 .tutorial_title h1
 {
     text-align: center;
@@ -52,6 +57,11 @@
     margin: 0 auto;
 }
 
+.item-content.play.gap
+{
+    grid-gap: 10rem;
+}
+
 .title-content
 {
     color: rgb(9, 33, 61);
@@ -100,6 +110,12 @@
      
 }
 
+.item p.dark 
+{
+    color: #a3b9d4
+    
+}
+
 .item-content .text .tabbed
 {
     margin: -.5rem 0 -.5rem 1.5rem;
@@ -108,7 +124,7 @@
     font-weight: 600;
 }
 
-.item-content .image img
+.item-content .image img:not(.not-shadow)
 {
     box-shadow: 5px 0px 15px rgb(75,143,244),
                 -5px 10px 50px rgb(71,111,211);
@@ -123,4 +139,94 @@
 .item-content .text .image img 
 {
     transform: scale(.7);
+}
+
+
+.item-title.dark,
+.title-content h2.dark,
+.item-content .text .tabbed.dark
+{
+    color: #6596F7;
+}
+
+.text .dark a
+{
+    color: #fff;
+    text-decoration: underline;
+}
+
+
+
+@media only screen and (max-width: 1250px)
+{
+    .init,
+    .item-content.play 
+    {
+        grid-template-columns: auto;
+
+    }
+
+    .item-content.play .image 
+    {
+        justify-self: center;
+    }
+
+    .item .item-title 
+    {
+        width: 110%;
+    }
+
+    .item .item-title h2 
+    {
+        font-size: 2rem;
+    }
+
+    .item 
+    {
+        margin: 0 1rem;
+    }
+
+    .item-content.play
+    {
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .item-content .text 
+    {
+        margin: 3rem auto;
+    }
+
+    .item-content .image 
+    {
+        align-self: center;
+        
+        
+    }
+
+    .item-content .image img 
+    {
+        transform: scale(1);
+        width: 100%;
+    }
+
+    .title-content 
+    {
+        margin: 2.5rem auto;
+    }
+
+    .item-content .charts canvas
+    {
+        
+        
+    }
+    
+    .image video 
+    {
+        transform: translateX(0);
+        width: 100%;
+    }
+
+    
 }
