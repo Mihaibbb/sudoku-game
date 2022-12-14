@@ -1,0 +1,17 @@
+RewriteEngine on
+
+# Rewrite /foo/bar to /foo/bar.php
+RewriteRule ^([^.?]+)$ %{REQUEST_URI}.php [L]
+
+RewriteRule ^account/id/([0-9]+) account.php?id=$1
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType text/css "access"
+  ExpiresByType text/js "access"
+  ExpiresByType text/javascript "access" 
+
+</IfModule>
+
+# NOTE! FOR APACHE ON WINDOWS: Add [NC] to RewriteCond like this:
+# RewriteCond %{THE_REQUEST} "^[^ ]* .*?\.php[? ].*$" [NC]

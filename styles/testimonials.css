@@ -1,0 +1,197 @@
+body 
+{
+    background: linear-gradient(90deg, rgba(0,112,255,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+.reviews_container
+{
+    font-family: 'Poppins';
+    font-weight: normal;
+}
+
+.title h1
+{
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+}
+
+.create_review
+{
+    width: 100%;
+    max-width: 350px;
+    height: 60px;
+    margin: 0 auto 2rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 2px 2px 30px rgba(0,0,0, .4);
+    
+}
+
+
+.create_review h2 
+{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color: rgb(37,37,37);
+}
+
+.reviews_container 
+{
+    width: 100%;
+    max-width: 98rem;
+    
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    
+    align-items: center;
+    grid-gap: 2rem;
+}
+
+.review
+{
+    box-shadow: 2px 2px 30px rgba(0,0,0, .4);
+    padding: 1rem;
+    padding-bottom: 3rem;
+    position: relative;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .9);
+    width: 100%;
+    
+}
+
+.review .profile
+{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+}
+
+.review .profile .id 
+{
+    display: none;
+}
+
+.review .profile .details 
+{
+    margin-left: .5rem;
+}
+
+.review .profile .details .name 
+{
+    font-size: 1.3rem;
+    color: #252525;
+    
+    font-weight: 600;
+}
+
+.review.dark .profile .details .name
+{
+    color: white;
+}
+
+
+.review .profile .details .username 
+{
+    font-size: 14px;
+    color: grey;
+}
+
+.review .image 
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.review .image img 
+{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.25);
+}
+
+.review .rating
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.review .rating i
+{
+    color: orange;
+    font-size: 20px;
+    
+}
+
+.review .feedback 
+{
+    width: 100%;
+    max-width: 100px;
+
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review .feedback i 
+{
+    font-size: 20px;
+    color: rgb(185,185,185);
+    cursor: pointer;
+}
+
+.review .feedback .like,
+.review .feedback .dislike 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review .feedback .like .numbers
+{
+   margin-left: .5rem;
+   font-size: 16px;
+   
+}
+
+.review .feedback .dislike .numbers
+{
+    margin-left: .55rem;
+    font-size: 16px;
+}
+
+.review .feedback .dislike.active,
+.review .feedback .like.active
+{
+    font-weight: 600;
+    
+}
+
+.review .feedback .dislike.active i,
+.review .feedback .like.active i
+{
+    color: rgb(72,162,239);
+}
+
+
+.review.dark 
+{
+    background: rgb(15, 21, 22);
+    color: white;
+}
